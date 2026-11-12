@@ -59,8 +59,13 @@ export default function Lightbox() {
       setItems(links.map(toItem));
       setIndex(links.indexOf(link));
     };
+    const onHashChange = () => setIndex(null);
     document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('hashchange', onHashChange);
+    };
   }, []);
 
   useEffect(() => {

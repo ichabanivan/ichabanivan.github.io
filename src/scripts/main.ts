@@ -38,6 +38,7 @@ function initHeader(): void {
     toggle?.focus();
   });
   window.matchMedia(media.lg).addEventListener('change', () => setOpen(false));
+  window.addEventListener('hashchange', () => setOpen(false));
 
   document.documentElement.classList.add('nav-ready');
 }
