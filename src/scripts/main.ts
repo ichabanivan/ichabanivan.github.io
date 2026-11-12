@@ -3,6 +3,7 @@ import { initScroll } from './scroll';
 import { initMagnetic } from './magnetic';
 import { refreshTenures } from '../lib/tenure';
 import { media } from '../ui/media';
+import { onFragmentNavigation } from '../lib/fragment-navigation';
 
 declare global {
   interface Window {
@@ -38,7 +39,7 @@ function initHeader(): void {
     toggle?.focus();
   });
   window.matchMedia(media.lg).addEventListener('change', () => setOpen(false));
-  window.addEventListener('hashchange', () => setOpen(false));
+  onFragmentNavigation(() => setOpen(false));
 
   document.documentElement.classList.add('nav-ready');
 }

@@ -10,6 +10,7 @@ import { gsap } from '../lib/gsap';
 import { duration, ease } from '../lib/motion';
 import { Box, TextLink, effects, vars, type BoxProps, type StyleProps } from '../ui';
 import { motionOk } from '../ui/media';
+import { onFragmentNavigation } from '../lib/fragment-navigation';
 
 interface Item {
   src: string;
@@ -59,12 +60,11 @@ export default function Lightbox() {
       setItems(links.map(toItem));
       setIndex(links.indexOf(link));
     };
-    const onHashChange = () => setIndex(null);
     document.addEventListener('click', onClick);
-    window.addEventListener('hashchange', onHashChange);
+    const stopNavigation = onFragmentNavigation(() => setIndex(null));
     return () => {
       document.removeEventListener('click', onClick);
-      window.removeEventListener('hashchange', onHashChange);
+      stopNavigation();
     };
   }, []);
 
