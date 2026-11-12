@@ -1,7 +1,8 @@
 import { getImage } from 'astro:assets';
 import type { DocumentKey, LogoKey } from '../data/cv';
 
-import efset from '../assets/cert-english-ef-set-b2-2024.png';
+import efset2026 from '../assets/cert-english-ef-set-b2-2026.png';
+import efset2024 from '../assets/cert-english-ef-set-b2-2024.png';
 import htmlCss from '../assets/cert-html-css-testprovider-2017.jpg';
 import javascript from '../assets/cert-javascript-essential-testprovider-2017.jpg';
 import php from '../assets/cert-php-starter-testprovider-2017.jpg';
@@ -16,7 +17,8 @@ import brightgrove from '../assets/logos/brightgrove.svg';
 import alevel from '../assets/logos/a-level.png';
 
 const SOURCES: Record<DocumentKey, ImageMetadata> = {
-  efset,
+  efset2026,
+  efset2024,
   htmlCss,
   javascript,
   php,

@@ -1,7 +1,8 @@
 export type LogoKey = 'fiverr' | 'auto1' | 'intelliceed' | 'brightgrove' | 'alevel';
 
 export type DocumentKey =
-  | 'efset'
+  | 'efset2026'
+  | 'efset2024'
   | 'htmlCss'
   | 'javascript'
   | 'php'
@@ -261,7 +262,7 @@ export const experience: Employer[] = [
     positions: [
       {
         title: 'Team Lead',
-        start: { label: 'May 2020', iso: '2020-05' },
+        start: { label: 'May 2021', iso: '2021-05' },
         end: { label: 'December 2021', iso: '2021-12' },
         summary:
           'Front-end team leadership across multiple client projects, covering hiring, code quality and mentoring.',
@@ -434,9 +435,15 @@ export const certifications: Certification[] = [
   {
     title: 'EF SET English Certificate 57/100 (B2 Upper Intermediate)',
     issuer: 'EF SET',
-    year: 2024,
+    year: 2026,
     url: 'https://cert.efset.org/cbSU9g',
-    image: 'efset',
+    image: 'efset2026',
+  },
+  {
+    title: 'EF SET English Certificate 57/100 (B2 Upper Intermediate)',
+    issuer: 'EF SET',
+    year: 2024,
+    image: 'efset2024',
   },
   {
     title: 'HTML, CSS',
