@@ -1,0 +1,42 @@
+# Numerous always-ignore extensions
+*.bak
+*.diff
+*.err
+*.exe
+*.log
+*.log*
+*.orig
+*.rej
+*.sass-cache
+*.swo
+*.swp
+*.vi
+*.iws
+*.ini
+*~
+
+# Folders to ignore
+.publish
+.CVS
+.git
+.hg
+.svn
+node_modules
+bower_components
+.idea
+src/manifest
+build
+gulpfile.js/temp
+
+# Optional npm cache directory
+.npm
+
+# OS files
+.DS_Store
+
+# Private CV source (contains phone number)
+src/files/
+
+# Astro
+dist
+.astro

@@ -1,0 +1,49 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import About from '../components/About';
+import Marquee from '../components/Marquee';
+import Experience from '../components/Experience';
+import Skills from '../components/Skills';
+import { Education, AdditionalInformation } from '../components/Education';
+import Contact, { Footer } from '../components/Contact';
+import Lightbox from '../components/Lightbox';
+import { getDocumentImages, logos } from '../lib/documents';
+import portrait from '../assets/portrait.jpg';
+import { profile, experience } from '../data/cv';
+
+const cvHref = profile.cvPdf;
+
+const image = await getImage({ src: portrait, widths: [480, 640, 800, 960, 1200], format: 'webp', quality: 78 });
+const photo = {
+  src: image.src,
+  srcSet: image.srcSet.attribute,
+  width: portrait.width,
+  height: portrait.height,
+};
+
+const documents = await getDocumentImages();
+
+const current = experience[0];
+const stack = `${profile.stack.slice(0, -1).join(', ')} and ${profile.stack.at(-1)}`;
+const title = `${profile.name} | ${profile.title} (${profile.stack.slice(0, 3).join(', ')})`;
+const description = `${profile.name} is a ${current.title} at ${current.company} based in ${profile.location}. ${stack}. Experience, technical skills, education and contact details.`;
+---
+
+<Base title={title} description={description}>
+  <Header cvHref={cvHref} />
+  <main id="main" tabindex="-1">
+    <Hero client:afterpaint photo={photo} />
+    <About />
+    <Marquee />
+    <Experience logos={logos} />
+    <Skills />
+    <Education documents={documents} />
+    <AdditionalInformation />
+    <Contact cvHref={cvHref} />
+  </main>
+  <Footer year={new Date().getFullYear()} />
+  <Lightbox client:afterpaint />
+</Base>
