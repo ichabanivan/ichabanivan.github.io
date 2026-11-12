@@ -1,7 +1,7 @@
 ---
 import { BG } from '../ui/theme.css';
 import '../ui/global.css';
-import { Box, NEW_TAB_HINT_ID, vars } from '../ui';
+import { NEW_TAB_HINT_ID } from '../ui';
 import { profile } from '../data/cv';
 import { buildJsonLd } from '../lib/jsonld';
 import bebasUrl from '../assets/fonts/bebas-neue-bold.woff2?url';
@@ -81,22 +81,6 @@ const jsonLd = buildJsonLd({
     </script>
   </head>
   <body>
-    <Box
-      as="a"
-      href="#main"
-      position="fixed"
-      top={8}
-      left={8}
-      zIndex={100}
-      padding="3 4"
-      background={vars.color.accent}
-      color={vars.color.white}
-      borderRadius={8}
-      transform={{ default: 'translateY(-200%)', hover: 'none' }}
-      display={{ print: 'none' }}
-    >
-      Skip to content
-    </Box>
     <span id={NEW_TAB_HINT_ID} hidden>Opens in a new tab</span>
     <slot />
     <script>
