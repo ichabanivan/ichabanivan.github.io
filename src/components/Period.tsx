@@ -1,12 +1,8 @@
 import { tenure } from '../lib/tenure';
+import type { DateLabel } from '../data/cv';
 import { Box, Text, vars, type StyleProps } from '../ui';
 
 export const PERIOD_WIDTH = '260px';
-
-interface DateLabel {
-  label: string;
-  iso?: string;
-}
 
 type Props = StyleProps & {
   start: Required<DateLabel>;
@@ -17,6 +13,12 @@ type Props = StyleProps & {
 
 const Time = ({ date }: { date: DateLabel }) =>
   date.iso ? <time dateTime={date.iso}>{date.label}</time> : <>{date.label}</>;
+
+export const DateRange = ({ start, end }: { start: DateLabel; end: DateLabel }) => (
+  <>
+    <Time date={start} /> - <Time date={end} />
+  </>
+);
 
 export default function Period({ start, end, location, showDuration, ...style }: Props) {
   return (
@@ -35,7 +37,7 @@ export default function Period({ start, end, location, showDuration, ...style }:
         textTransform={{ default: 'uppercase', print: 'none' }}
         color={vars.color.accentText}
       >
-        <Time date={start} /> - <Time date={end} />
+        <DateRange start={start} end={end} />
       </Text>
       {showDuration && (
         <Text

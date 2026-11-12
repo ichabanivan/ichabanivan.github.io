@@ -1,10 +1,3 @@
-export interface Project {
-  name: string;
-  description: string;
-  tech?: string;
-  responsibilities?: string;
-}
-
 export type LogoKey = 'fiverr' | 'auto1' | 'intelliceed' | 'brightgrove' | 'alevel';
 
 export type DocumentKey =
@@ -16,17 +9,32 @@ export type DocumentKey =
   | 'masterOilGas'
   | 'bachelorMining';
 
-export interface Role {
+export interface DateLabel {
+  label: string;
+  iso?: string;
+}
+
+export interface Project {
+  name: string;
+  description: string;
+}
+
+export interface Position {
+  title: string;
+  client?: { name: string; logo?: LogoKey };
+  start: Required<DateLabel>;
+  end: DateLabel;
+  summary: string;
+  highlights: string[];
+  projects?: Project[];
+  tech: string[];
+}
+
+export interface Employer {
   company: string;
   logo?: LogoKey;
   location: string;
-  title: string;
-  start: { label: string; iso: string };
-  end: { label: string; iso?: string };
-  summary?: string;
-  tech?: string;
-  bullets?: string[];
-  projects?: Project[];
+  positions: [Position, ...Position[]];
 }
 
 export const profile = {
@@ -39,7 +47,6 @@ export const profile = {
   phone: null as string | null,
   linkedin: 'https://www.linkedin.com/in/ivanchaban/',
   github: 'https://github.com/ichabanivan',
-  // PDF export of the CV Google Doc: always the current version, downloads directly
   cvPdf:
     'https://docs.google.com/document/d/1MK_L2FU4hosFpplFxnm-wJyn8X-SpZWBd6DNlu_4K70/export?format=pdf',
   telegram: 'https://t.me/ichabanivan',
@@ -172,104 +179,78 @@ export const skills: SkillGroup[] = [
   { group: 'Operating Systems', items: ['Mac OS', 'Windows', 'Linux'], printHidden: true },
 ];
 
-export const experience: Role[] = [
+export const experience: Employer[] = [
   {
     company: 'Fiverr',
     logo: 'fiverr',
     location: 'Israel, Remote',
-    title: 'Senior Software Engineer',
-    start: { label: 'July 2023', iso: '2023-07' },
-    end: { label: 'Present' },
-    summary:
-      'Fiverr is a leading digital marketplace for freelance services, connecting businesses with independent professionals worldwide. The platform handles millions of transactions, requiring highly scalable architecture, seamless user experience, and continuous innovation across its ecosystem of web applications and internal tools.',
-    tech: 'React, Node.js, TypeScript, NestJS, Next.js (SSR/CSR), React Hook Form, Zod, Docker, Kubernetes, Okteto, Grafana, Mixpanel, Coralogix, Athena, CircleCI, Figma, Cursor',
-    bullets: [
-      'Collaborated with design and development teams to adopt a company-wide design system, adopting FigmaMCP, DevMCP, and Cursor to accelerate front-end delivery and maintain UI/UX consistency.',
-      'Provided 24/7 on-call support, monitoring production systems and creating Grafana and Mixpanel dashboards to ensure reliability, performance, and rapid incident resolution.',
-      'Conducted rollout releases and A/B tests, analyzing user behavior to optimize feature adoption and improve platform engagement and usage metrics.',
-      'Led the front-end development of Microsoft subscriptions sales project, delivering end-to-end functionality and maintaining high-quality UI/UX standards.',
-      'Conducted onboarding for new developers, mentoring team members on code standards, architecture, and best practices.',
-      'Maintained Logo Maker project.',
-      'Designed and implemented a seamless authentication flow including signup forms, social login providers, account activation, and user questionnaire; streamlined onboarding, ensured GDPR compliance, and delivered measurable impact, increased sign-in success rate by 15%, boosted registrations by 18%, raised Average Selling Price (ASP) by 22%, and improved Sales per Buyer (SPB) by 10%.',
-      'Created a scalable code activation flow and a package with reusable components, fully integrated into the company’s development workflow. Designed with a centralized update mechanism and trigger API, the package reached hundreds of consumers across projects, improving maintainability, ensuring UI/UX consistency.',
-      'Developed Buyer Profile as a standalone React application, implementing both Server-Side Rendering (SSR) and Client-Side Rendering (CSR) with an API structured in the Backend-for-Frontend (BFF) pattern.',
-      'Worked extensively with the main React monorepo, migrating it to pnpm to reduce build time by up to 20%.',
-      'Worked extensively with Okteto and Kubernetes for deployment, scaling, and maintaining system stability.',
-      'Developed numerous type-safe forms using React Hook Form with Zod and TypeScript, ensuring robust and maintainable frontend code.',
+    positions: [
+      {
+        title: 'Senior Software Engineer',
+        start: { label: 'July 2023', iso: '2023-07' },
+        end: { label: 'Present' },
+        summary:
+          'Global marketplace for freelance services, handling millions of transactions. Focus on scalable web applications and internal tools across the platform.',
+        highlights: [
+          'Designed and implemented the authentication flow (signup, social login, account activation, user questionnaire) with GDPR compliance, raising sign-in success by 15%, registrations by 18%, average selling price by 22% and sales per buyer by 10%.',
+          'Built a reusable code-activation package with a centralized update mechanism and a trigger API, adopted by hundreds of consumers across projects.',
+          'Lead front-end development of the Microsoft subscriptions sales project end to end.',
+          'Developed Buyer Profile as a standalone React application with server- and client-side rendering and a Backend-for-Frontend (BFF) API.',
+          'Migrated the main React monorepo to pnpm, cutting build time by up to 20%.',
+          'Run rollout releases and A/B tests, and provide 24/7 on-call support with Grafana and Mixpanel dashboards.',
+        ],
+        tech: [
+          'TypeScript',
+          'React',
+          'Next.js',
+          'Node.js',
+          'NestJS',
+          'React Hook Form',
+          'Zod',
+          'pnpm',
+          'Docker',
+          'Kubernetes',
+          'Okteto',
+          'CircleCI',
+          'Grafana',
+          'Mixpanel',
+          'Coralogix',
+          'Athena',
+          'Figma',
+          'Cursor',
+        ],
+      },
     ],
   },
   {
     company: 'Auto1 Group',
     logo: 'auto1',
     location: 'Berlin, Germany, Remote',
-    title: 'Senior Software Engineer',
-    start: { label: 'December 2021', iso: '2021-12' },
-    end: { label: 'July 2023', iso: '2023-07' },
-    summary:
-      'Auto1 Group is Europe’s leading digital automotive platform that connects buyers and sellers across multiple markets, streamlining car sales and purchases through innovative technology. The engineering team builds scalable web applications, internal tools, and micro-frontends to support customer experience, operations, and business growth.',
-    tech: 'React, Node.js, TypeScript, Micro-Frontend Architecture (MFE), Ant Design (Antd), Jenkins, Docker, Git, GraphQL, REST APIs',
-    bullets: [
-      'Developed modern, scalable Micro-Frontend (MFE) applications to replace legacy systems, improving maintainability, modularity, and application performance.',
-      'Planned and executed the migration to the latest Ant Design (Antd) UI framework across all front-end applications, ensuring consistent UI/UX and enabling faster feature delivery with new reusable components.',
-      'Designed and delivered a back-office application to streamline administrative workflows, improving internal efficiency and reducing manual effort.',
-      'Created and optimized Jenkins CI/CD pipelines to support MFE applications, increasing deployment reliability and reducing release times.',
-      'Migrated multiple applications to the latest Node.js, ensuring security compliance, performance improvements, and long-term maintainability.',
-    ],
-  },
-  {
-    company: 'Intelliceed Inc.',
-    logo: 'intelliceed',
-    location: 'Kharkiv, Ukraine, On-site',
-    title: 'Team Lead',
-    start: { label: 'May 2020', iso: '2020-05' },
-    end: { label: 'December 2021', iso: '2021-12' },
-    bullets: [
-      'Led the Front-End team, overseeing multiple projects and ensuring delivery of high-quality, scalable solutions.',
-      'Conducted interviews for candidates across Junior, Middle, Senior, and Lead roles, ensuring strong team growth and alignment with company standards.',
-      'Performed code reviews for developers and cross-company teams, providing actionable feedback to improve code quality, maintainability, and adherence to best practices.',
-      'Analyzed codebases across multiple projects, identifying potential issues and recommending solutions to optimize performance and reliability.',
-      'Tutored and mentored colleagues and junior developers, sharing knowledge, best practices, and technical guidance to strengthen team skills.',
-      'Developed new projects and architectures, leveraging technical expertise to design innovative and maintainable solutions.',
-      'Implemented new features for existing projects, demonstrating proficiency in complex systems and delivering timely, high-quality results.',
-    ],
-  },
-  {
-    company: 'Brightgrove',
-    logo: 'brightgrove',
-    location: 'Kharkiv, Ukraine, subcontracted from Intelliceed Inc.',
-    title: 'Senior Software Engineer',
-    start: { label: 'November 2020', iso: '2020-11' },
-    end: { label: 'November 2021', iso: '2021-11' },
-    summary:
-      'Event Management software: CRM system for managing company sales processes with multiple admin areas to control and monitor customer communications, deal creation, feedback collection, and production workflows (textiles, papers, etc.). The platform also included event management functionality, enabling organizers to create public events, issue digital tickets, and support real-time ticket validation and attendee check-in through a React Native mobile application.',
-    tech: 'React, React Native, Apollo, GraphQL, i18n, Jest, DnD, Bootstrap, Reactstrap, Formik, Yup, lodash, moment, classnames',
-    bullets: [
-      'Developed a React-based CRM with admin areas for sales, communication tracking, feedback processing, and production management.',
-      'Built a ticketing module supporting event creation, ticket distribution, and attendee management.',
-      'Delivered a public events web application (React) and a ticket-checking mobile application (React Native) for real-time validation of invited attendees.',
-      'Implemented producer & sponsor tools for product sales and order management.',
-      'Designed and launched a Survey Client application with an Admin dashboard for managing responses and insights.',
-      'Integrated Apollo + GraphQL for optimized data handling and seamless communication between client and server.',
-    ],
-  },
-  {
-    company: 'Intelliceed Inc.',
-    logo: 'intelliceed',
-    location: 'Kharkiv, Ukraine, On-site',
-    title: 'Senior Software Engineer',
-    start: { label: 'January 2020', iso: '2020-01' },
-    end: { label: 'April 2021', iso: '2021-04' },
-    projects: [
+    positions: [
       {
-        name: 'Motorsport management software',
-        description: 'Timing and flagging software for circuit racing, marathon and biking events.',
-        tech: 'Dart, Flutter, provider, get_it, sqflite, geolocator, connectivity',
-      },
-      {
-        name: 'Healthcare Platform',
-        description:
-          'Medicare project that aims to manage patients’ treatment process by generating weekly plans of individual diets.',
-        tech: 'HTML5, CSS3, JavaScript, Git, redux, redux-saga, React Native',
+        title: 'Senior Software Engineer',
+        start: { label: 'December 2021', iso: '2021-12' },
+        end: { label: 'July 2023', iso: '2023-07' },
+        summary:
+          'Europe’s leading digital automotive platform, connecting car buyers and sellers across multiple markets. Focus on micro-frontends, internal tools and back-office applications.',
+        highlights: [
+          'Replaced legacy systems with micro-frontend applications, improving maintainability, modularity and performance.',
+          'Planned and executed the migration of all front-end applications to the latest version of Ant Design, unifying the UI and speeding up feature delivery.',
+          'Delivered a back-office application that streamlined administrative workflows and reduced manual effort.',
+          'Built and optimized Jenkins CI/CD pipelines for MFE applications, improving deployment reliability and shortening release times.',
+          'Upgraded multiple applications to the latest Node.js version, improving security compliance and performance.',
+        ],
+        tech: [
+          'TypeScript',
+          'React',
+          'Micro-Frontends',
+          'Ant Design',
+          'Node.js',
+          'GraphQL',
+          'REST APIs',
+          'Jenkins',
+          'Docker',
+        ],
       },
     ],
   },
@@ -277,32 +258,101 @@ export const experience: Role[] = [
     company: 'Intelliceed Inc.',
     logo: 'intelliceed',
     location: 'Kharkiv, Ukraine, On-site',
-    title: 'Middle Software Engineer',
-    start: { label: 'April 2018', iso: '2018-04' },
-    end: { label: 'December 2019', iso: '2019-12' },
-    projects: [
+    positions: [
       {
-        name: 'News Extra',
-        description:
-          'Presentation of related TV Channel news content; multilingual project, contains commerce advertising content, integrated with the most popular social media.',
-        tech: 'HTML5, CSS3, JavaScript, Git, redux, redux-saga, React Native, integration with YouTube API, different API usage, responsive design',
-        responsibilities: 'Front-End Developer, implementing features, improvements, bug fixing.',
+        title: 'Team Lead',
+        start: { label: 'May 2020', iso: '2020-05' },
+        end: { label: 'December 2021', iso: '2021-12' },
+        summary:
+          'Front-end team leadership across multiple client projects, covering hiring, code quality and mentoring.',
+        highlights: [
+          'Led the front-end team, overseeing delivery across multiple projects and designing the architecture of new ones.',
+          'Interviewed candidates for Junior through Lead roles and mentored junior developers.',
+          'Reviewed code for in-house and cross-company teams and audited codebases for performance and reliability issues.',
+        ],
+        tech: ['React', 'React Native', 'Flutter', 'Dart', 'GraphQL', 'Apollo'],
       },
       {
-        name: 'TV Drama',
-        description:
-          'Entertainment content for audience community; multilingual, supporting English and Arabic languages, contains commerce advertising content, integrated with the most popular social media.',
-        tech: 'HTML5, CSS3, JavaScript, Git, React.js, redux, redux-saga, React Native, integration with YouTube API, different API usage',
-        responsibilities:
-          'Front-End Developer, implementation of new functionality and improvements, bug fixing.',
+        title: 'Senior Software Engineer',
+        client: { name: 'Brightgrove', logo: 'brightgrove' },
+        start: { label: 'November 2020', iso: '2020-11' },
+        end: { label: 'November 2021', iso: '2021-11' },
+        summary:
+          'Event-management and CRM platform for sales, customer communication, production workflows and public events with digital ticketing.',
+        highlights: [
+          'Built a React CRM with admin areas for sales, communication tracking, feedback and production management.',
+          'Delivered a ticketing module, a public events web app and a React Native app for real-time ticket validation and attendee check-in.',
+          'Shipped producer and sponsor tools for product sales and order management, plus a survey app with an admin dashboard.',
+          'Integrated Apollo and GraphQL to handle data between client and server.',
+        ],
+        tech: [
+          'React',
+          'React Native',
+          'GraphQL',
+          'Apollo',
+          'Formik',
+          'Yup',
+          'i18n',
+          'Jest',
+          'Bootstrap (Reactstrap)',
+        ],
       },
       {
-        name: 'Sofra',
-        description:
-          'Presentation of related TV Channel entertainment (culinary) content for audience community; multilingual, contains commerce advertising content, integrated with the most popular social media.',
-        tech: 'HTML5, CSS3, JavaScript, jQuery, Git, React.js, redux, redux-saga, redux-thunk, integration with YouTube API, multi translations, different API usage',
-        responsibilities:
-          'Front-End Developer, new features development, improvements implementation, bug fixing.',
+        title: 'Senior Software Engineer',
+        start: { label: 'January 2020', iso: '2020-01' },
+        end: { label: 'April 2021', iso: '2021-04' },
+        summary: 'Cross-platform mobile applications for client projects, built with Flutter and React Native.',
+        highlights: ['Developed two cross-platform mobile applications with Flutter and React Native.'],
+        projects: [
+          {
+            name: 'Motorsport management software',
+            description: 'Timing and flagging app for circuit racing, marathon and biking events.',
+          },
+          {
+            name: 'Healthcare Platform',
+            description: 'Patient treatment app that generates individual weekly diet plans.',
+          },
+        ],
+        tech: [
+          'Flutter',
+          'Dart',
+          'React Native',
+          'JavaScript',
+          'Redux',
+          'Redux-Saga',
+          'Provider',
+          'SQLite (sqflite)',
+          'Geolocator',
+        ],
+      },
+      {
+        title: 'Middle Software Engineer',
+        start: { label: 'April 2018', iso: '2018-04' },
+        end: { label: 'December 2019', iso: '2019-12' },
+        summary:
+          'Multilingual media products for TV channels, with advertising and social media integrations.',
+        highlights: [
+          'Implemented new features and improvements and fixed bugs across three multilingual media products.',
+          'Integrated the YouTube API and social media platforms, and supported English and Arabic content.',
+        ],
+        projects: [
+          { name: 'News Extra', description: 'News content for a TV channel.' },
+          {
+            name: 'TV Drama',
+            description: 'Entertainment content for an English- and Arabic-speaking audience.',
+          },
+          { name: 'Sofra', description: 'Culinary content for a TV channel’s audience.' },
+        ],
+        tech: [
+          'React',
+          'React Native',
+          'JavaScript',
+          'Redux',
+          'Redux-Saga',
+          'Redux-Thunk',
+          'jQuery',
+          'YouTube API',
+        ],
       },
     ],
   },
@@ -310,16 +360,30 @@ export const experience: Role[] = [
     company: 'A-level Ukraine',
     logo: 'alevel',
     location: 'Kharkiv, Ukraine, On-site',
-    title: 'Junior Software Engineer',
-    start: { label: 'September 2016', iso: '2016-09' },
-    end: { label: 'February 2018', iso: '2018-02' },
-    summary: 'Markup for different services.',
-    tech: 'HTML5, CSS3, JavaScript, jQuery, Git, Redux-saga, Redux-thunk',
-    bullets: [
-      'Front-End Engineer, taking part in implementing features, improvements, bug fixing.',
+    positions: [
+      {
+        title: 'Junior Software Engineer',
+        start: { label: 'September 2016', iso: '2016-09' },
+        end: { label: 'February 2018', iso: '2018-02' },
+        summary: 'Page markup and front-end features for different services.',
+        highlights: ['Implemented features and improvements and fixed bugs in front-end code.'],
+        tech: ['HTML5', 'CSS3', 'JavaScript', 'jQuery', 'Redux', 'Redux-Saga', 'Redux-Thunk'],
+      },
     ],
   },
 ];
+
+export const currentPosition = experience[0].positions[0];
+export const careerStart = experience.at(-1)!.positions.at(-1)!.start;
+
+export function employerPeriod({ positions }: Employer) {
+  const start = positions.reduce((a, p) => (p.start.iso < a.iso ? p.start : a), positions[0].start);
+  const end = positions.reduce<DateLabel>(
+    (a, p) => (!a.iso ? a : !p.end.iso || p.end.iso > a.iso ? p.end : a),
+    positions[0].end,
+  );
+  return { start, end };
+}
 
 export const education = [
   {

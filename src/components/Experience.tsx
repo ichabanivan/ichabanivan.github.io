@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react';
 import Section from './Section';
-import Period, { PERIOD_WIDTH } from './Period';
-import { experience, type Role } from '../data/cv';
-import type { Logos } from '../lib/documents';
-import { Box, Card, PrintOnly, Text, vars } from '../ui';
+import Period, { DateRange, PERIOD_WIDTH } from './Period';
+import { employerPeriod, experience, type Employer, type Position } from '../data/cv';
+import type { Logo, Logos } from '../lib/documents';
+import { tenure } from '../lib/tenure';
+import { Box, Text, vars } from '../ui';
 
 const COLUMN_GAP = 'clamp(24px, 4vw, 56px)';
 const LINE_LEFT = `calc(${PERIOD_WIDTH} + ${COLUMN_GAP} / 2)`;
+const PRINT_FULL_ROW = { print: '1 / -1' } as const;
 
 const Strong = ({ children }: { children: ReactNode }) => (
   <Box as="strong" color={vars.color.text} fontWeight={600}>
@@ -14,8 +16,9 @@ const Strong = ({ children }: { children: ReactNode }) => (
   </Box>
 );
 
-function RoleCard({ role, logos, last }: { role: Role; logos: Logos; last: boolean }) {
-  const logo = role.logo ? logos[role.logo] : null;
+function EmployerEntry({ employer, logos, last }: { employer: Employer; logos: Logos; last: boolean }) {
+  const { start, end } = employerPeriod(employer);
+  const grouped = employer.positions.length > 1;
   return (
     <Box
       as="article"
@@ -26,12 +29,12 @@ function RoleCard({ role, logos, last }: { role: Role; logos: Logos; last: boole
       gridTemplateColumns={{
         default: 'minmax(0, 1fr)',
         lg: `${PERIOD_WIDTH} minmax(0, 1fr)`,
-        print: 'auto auto minmax(0, 1fr)',
+        print: 'minmax(0, 1fr) auto',
       }}
       alignItems={{ print: 'baseline' }}
-      gap={{ default: '4', lg: COLUMN_GAP, print: '0 1' }}
+      gap={{ default: '4', lg: COLUMN_GAP, print: '0 4' }}
       paddingLeft={{ default: '8', lg: '0', print: '0' }}
-      paddingBottom={{ default: last ? '0' : 'clamp(48px, 7vw, 96px)', print: '2' }}
+      paddingBottom={{ default: last ? '0' : 'clamp(48px, 7vw, 96px)', print: '3' }}
     >
       <Box
         aria-hidden
@@ -46,164 +49,176 @@ function RoleCard({ role, logos, last }: { role: Role; logos: Logos; last: boole
         display={{ print: 'none' }}
       />
       <Period
-        start={role.start}
-        end={role.end}
-        location={role.location}
+        start={start}
+        end={end}
+        location={employer.location}
         showDuration
-        gridColumn={{ print: '3' }}
+        gridColumn={{ print: '2' }}
         gridRow={{ print: '1' }}
         flexWrap={{ print: 'wrap' }}
         justifyContent={{ print: 'flex-end' }}
       />
       <Box display={{ print: 'contents' }}>
-        <Box
-          display={{ default: 'flex', print: 'inline' }}
-          flexWrap="wrap"
-          alignItems="center"
-          justifyContent="space-between"
-          gap="3 6"
-        >
-          <Text
-            as="h3"
-            variant="display"
-            display={{ print: 'inline' }}
-            fontSize={{ default: 'clamp(34px, 4vw, 52px)', print: '12pt' }}
-          >
-            {role.company}
-          </Text>
-          {logo && (
-            <Box
-              as="img"
-              src={logo.src}
-              htmlWidth={logo.width}
-              htmlHeight={logo.height}
-              alt=""
-              loading="lazy"
-              flex="none"
-              width="auto"
-              height={logo.displayHeight ?? 22}
-              maxWidth={150}
-              objectFit="contain"
-              opacity={{ default: 0.75, groupHover: 1 }}
-              transition="opacity 0.4s"
-              display={{ print: 'none' }}
-            />
-          )}
-        </Box>
-        <Text
-          display={{ print: 'inline' }}
-          marginTop={{ default: '2', print: '0' }}
-          fontSize={{ default: 18, print: '10pt' }}
-          fontWeight={600}
-          color={vars.color.text}
-        >
-          <PrintOnly> — </PrintOnly>
-          {role.title}
-        </Text>
-        {role.summary && (
-          <Text
-            display={{ print: 'none' }}
-            marginTop={{ default: '5', print: '1' }}
-            color={vars.color.muted}
-          >
-            {role.summary}
-          </Text>
-        )}
-        {role.tech && (
-          <Text
-            gridColumn={{ print: '1 / -1' }}
-            marginTop={{ default: '4', print: '1' }}
-            padding={{ default: '4', print: '0' }}
-            borderLeft={{ default: `2px solid ${vars.color.accent}`, print: 0 }}
-            borderRadius="0 10px 10px 0"
-            background={{ default: vars.color.surface, print: 'none' }}
-            fontSize={{ default: 14, print: 'inherit' }}
-            color={vars.color.muted}
-          >
-            <Strong>Technologies:</Strong> {role.tech}
-          </Text>
-        )}
-        {role.bullets && (
-          <>
-            <Text
-              as="h4"
-              variant="eyebrow"
-              gridColumn={{ print: '1 / -1' }}
-              marginTop={{ default: '6', print: '1' }}
-              color={vars.color.muted}
-            >
-              Responsibilities
-            </Text>
-            <BulletList items={role.bullets} />
-          </>
-        )}
-        {role.projects && (
-          <Box
-            display="grid"
-            gridColumn={{ print: '1 / -1' }}
-            gap={{ default: '4', print: '1' }}
-            marginTop={{ default: '5', print: '1' }}
-          >
-            {role.projects.map((project) => (
-              <Card
-                key={project.name}
-                padding={{ default: '5', print: '0' }}
-                breakInside={{ print: 'avoid-page' }}
-              >
-                <Text
-                  as="h4"
-                  display={{ print: 'inline' }}
-                  fontSize={{ default: 17, print: 'inherit' }}
-                  fontWeight={600}
-                  color={vars.color.white}
-                >
-                  {project.name}
-                </Text>
-                <Text marginTop="2" display={{ print: 'none' }} color={vars.color.muted}>
-                  {project.description}
-                </Text>
-                {project.tech && (
-                  <Text
-                    display={{ print: 'inline' }}
-                    marginTop={{ default: '2', print: '0' }}
-                    fontSize={{ default: 14, print: 'inherit' }}
-                    color={vars.color.muted}
-                  >
-                    <PrintOnly> — </PrintOnly>
-                    <Strong>Technologies:</Strong> {project.tech}
-                  </Text>
-                )}
-                {project.responsibilities && (
-                  <Text
-                    marginTop={{ default: '2', print: '0' }}
-                    fontSize={{ default: 14, print: 'inherit' }}
-                    color={vars.color.muted}
-                  >
-                    <Strong>Responsibilities:</Strong> {project.responsibilities}
-                  </Text>
-                )}
-              </Card>
-            ))}
-          </Box>
-        )}
+        <EmployerHeader employer={employer} logos={logos} />
+        {employer.positions.map((position, i) => (
+          <PositionBlock
+            key={position.start.iso}
+            position={position}
+            logos={logos}
+            grouped={grouped}
+            first={i === 0}
+          />
+        ))}
       </Box>
     </Box>
   );
 }
 
-function BulletList({ items }: { items: string[] }) {
+function EmployerHeader({ employer, logos }: { employer: Employer; logos: Logos }) {
+  const logo = employer.logo ? logos[employer.logo] : null;
+  return (
+    <Box
+      display="flex"
+      flexWrap="wrap"
+      alignItems="center"
+      justifyContent="space-between"
+      gap="3 6"
+      gridColumn={{ print: '1' }}
+      gridRow={{ print: '1' }}
+    >
+      <Text as="h3" variant="display" fontSize={{ default: 'clamp(34px, 4vw, 52px)', print: '12pt' }}>
+        {employer.company}
+      </Text>
+      {logo && <LogoImage logo={logo} />}
+    </Box>
+  );
+}
+
+function LogoImage({ logo, height = 22 }: { logo: Logo; height?: number }) {
+  return (
+    <Box
+      as="img"
+      src={logo.src}
+      htmlWidth={logo.width}
+      htmlHeight={logo.height}
+      alt=""
+      loading="lazy"
+      flex="none"
+      width="auto"
+      height={logo.displayHeight ?? height}
+      maxWidth={150}
+      objectFit="contain"
+      opacity={{ default: 0.75, groupHover: 1 }}
+      transition="opacity 0.4s"
+      display={{ print: 'none' }}
+    />
+  );
+}
+
+function PositionBlock({
+  position,
+  logos,
+  grouped,
+  first,
+}: {
+  position: Position;
+  logos: Logos;
+  grouped: boolean;
+  first: boolean;
+}) {
+  const clientLogo = position.client?.logo ? logos[position.client.logo] : null;
+  return (
+    <Box
+      gridColumn={PRINT_FULL_ROW}
+      marginTop={{ default: first ? '2' : '8', print: first ? '0' : '2' }}
+      paddingTop={{ default: first ? '0' : '8', print: '0' }}
+      borderTop={{ default: first ? 0 : `1px solid ${vars.color.line}`, print: 0 }}
+      breakInside={{ print: 'avoid-page' }}
+    >
+      <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between" gap="2 6">
+        <Text
+          as="h4"
+          fontSize={{ default: 18, print: '10pt' }}
+          fontWeight={600}
+          color={vars.color.text}
+        >
+          {position.title}
+        </Text>
+        {clientLogo && <LogoImage logo={clientLogo} height={18} />}
+      </Box>
+      {grouped && (
+        <Text variant="meta" marginTop={{ default: '1', print: '0' }}>
+          {position.client && (
+            <>
+              Client: <Strong>{position.client.name}</Strong>
+              {' · '}
+            </>
+          )}
+          <DateRange start={position.start} end={position.end} />
+          {' · '}
+          <span data-tenure-start={position.start.iso} data-tenure-end={position.end.iso}>
+            {tenure(position.start.iso, position.end.iso)}
+          </span>
+        </Text>
+      )}
+      <Text display={{ print: 'none' }} marginTop="4" color={vars.color.muted}>
+        {position.summary}
+      </Text>
+      <ListHeading>Highlights</ListHeading>
+      <BulletList items={position.highlights.map((text) => ({ key: text, content: text }))} />
+      {position.projects && (
+        <>
+          <ListHeading>Projects</ListHeading>
+          <BulletList
+            items={position.projects.map((project) => ({
+              key: project.name,
+              content: (
+                <>
+                  <Strong>{project.name}</Strong>: {project.description}
+                </>
+              ),
+            }))}
+          />
+        </>
+      )}
+      <Text
+        marginTop={{ default: '5', print: '1' }}
+        padding={{ default: '4', print: '0' }}
+        borderLeft={{ default: `2px solid ${vars.color.accent}`, print: 0 }}
+        borderRadius="0 10px 10px 0"
+        background={{ default: vars.color.surface, print: 'none' }}
+        fontSize={{ default: 14, print: 'inherit' }}
+        color={vars.color.muted}
+      >
+        <Strong>Technologies:</Strong> {position.tech.join(', ')}
+      </Text>
+    </Box>
+  );
+}
+
+const ListHeading = ({ children }: { children: ReactNode }) => (
+  <Text
+    as="h5"
+    variant="eyebrow"
+    marginTop={{ default: '5', print: '1' }}
+    color={vars.color.muted}
+  >
+    {children}
+  </Text>
+);
+
+function BulletList({ items }: { items: { key: string; content: ReactNode }[] }) {
   return (
     <Box
       as="ul"
       display="grid"
-      gridColumn={{ print: '1 / -1' }}
       gap={{ default: '3', print: '0' }}
       marginTop={{ default: '3', print: '1' }}
     >
       {items.map((item) => (
         <Box
           as="li"
-          key={item}
+          key={item.key}
           position="relative"
           paddingLeft={{ default: '6', print: '4' }}
           breakInside={{ print: 'avoid-page' }}
@@ -218,7 +233,7 @@ function BulletList({ items }: { items: string[] }) {
             height={{ default: 2, print: 1 }}
             background={vars.color.accent}
           />
-          {item}
+          {item.content}
         </Box>
       ))}
     </Box>
@@ -241,12 +256,12 @@ export default function Experience({ logos }: { logos: Logos }) {
           transformOrigin="top"
           display={{ print: 'none' }}
         />
-        {experience.map((role, i) => (
-          <RoleCard
-            role={role}
+        {experience.map((employer, i) => (
+          <EmployerEntry
+            employer={employer}
             logos={logos}
             last={i === experience.length - 1}
-            key={`${role.company}-${role.start.iso}`}
+            key={employer.company}
           />
         ))}
       </Box>

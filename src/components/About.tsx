@@ -1,12 +1,10 @@
 import Section from './Section';
-import { experience, profile } from '../data/cv';
+import { careerStart, currentPosition, experience, profile } from '../data/cv';
 import { yearsSince } from '../lib/tenure';
 import { Box, Text, vars } from '../ui';
 
-const current = experience[0];
-const first = experience[experience.length - 1];
 const facts = [
-  { term: 'Current role', value: `${current.title}, ${current.company}` },
+  { term: 'Current role', value: `${currentPosition.title}, ${experience[0].company}` },
   { term: 'Based in', value: profile.location },
 ];
 
@@ -23,9 +21,9 @@ function ExperienceStat() {
         fontSize="clamp(64px, 6vw, 88px)"
         lineHeight={0.85}
         color={vars.color.white}
-        title={`Since ${first.start.label}`}
+        title={`Since ${careerStart.label}`}
       >
-        <span data-years-since={first.start.iso}>{yearsSince(first.start.iso)}</span>
+        <span data-years-since={careerStart.iso}>{yearsSince(careerStart.iso)}</span>
         <Box as="span" color={vars.color.accentText}>
           +
         </Box>{' '}

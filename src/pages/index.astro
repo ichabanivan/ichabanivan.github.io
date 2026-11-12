@@ -12,7 +12,7 @@ import Contact, { Footer } from '../components/Contact';
 import Lightbox from '../components/Lightbox';
 import { getDocumentImages, logos } from '../lib/documents';
 import portrait from '../assets/portrait.jpg';
-import { profile, experience } from '../data/cv';
+import { profile, experience, currentPosition } from '../data/cv';
 
 const cvHref = profile.cvPdf;
 
@@ -26,10 +26,9 @@ const photo = {
 
 const documents = await getDocumentImages();
 
-const current = experience[0];
 const stack = `${profile.stack.slice(0, -1).join(', ')} and ${profile.stack.at(-1)}`;
 const title = `${profile.name} | ${profile.title} (${profile.stack.slice(0, 3).join(', ')})`;
-const description = `${profile.name} is a ${current.title} at ${current.company} based in ${profile.location}. ${stack}. Experience, technical skills, education and contact details.`;
+const description = `${profile.name} is a ${currentPosition.title} at ${experience[0].company} based in ${profile.location}. ${stack}. Experience, technical skills, education and contact details.`;
 ---
 
 <Base title={title} description={description}>

@@ -24,7 +24,7 @@ globalStyle('body', {
   overflowX: 'clip',
 });
 
-globalStyle('h1, h2, h3, h4, p, ul, ol, dl, dd, address', { margin: 0 });
+globalStyle('h1, h2, h3, h4, h5, p, ul, ol, dl, dd, address', { margin: 0 });
 globalStyle('ul, ol', { padding: 0, listStyle: 'none' });
 globalStyle('address', { fontStyle: 'normal' });
 globalStyle('img', { display: 'block', maxWidth: '100%' });
@@ -86,6 +86,6 @@ globalStyle('*', {
   },
 });
 
-globalStyle('h2, h3, h4', { '@media': { [print]: { breakAfter: 'avoid' } } });
+globalStyle('h2, h3, h4, h5', { '@media': { [print]: { breakAfter: 'avoid' } } });
 
 globalStyle('p, li', { '@media': { [print]: { orphans: 3, widows: 3 } } });
