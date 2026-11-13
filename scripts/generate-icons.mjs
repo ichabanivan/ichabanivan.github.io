@@ -1,14 +1,16 @@
 import { writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
 
-const BG = '#0b0b0c';
-const TILE = '#131315';
-const INK = '#f4f4f5';
+// Brand kit (Mix, on red): red tile, white I, ink C
 const RED = '#cd0d2e';
+const BG = RED;
+const TILE = RED;
+const I_COLOR = '#ffffff';
+const C_COLOR = '#0b0b0c';
 const out = (name) => new URL(`../public/${name}`, import.meta.url);
 
-const glyph = `<rect x="12" y="8" width="8" height="48" fill="${INK}"/><path d="M48 23v-4a8 8 0 0 0-8-8h-4a8 8 0 0 0-8 8v26a8 8 0 0 0 8 8h4a8 8 0 0 0 8-8v-4" fill="none" stroke="${RED}" stroke-width="8"/>`;
-const pixelGlyph = `<path fill="${INK}" d="M3 2h2v12H3z"/><path fill="${RED}" d="M7 2h5v1h1v3h-2V4H8v8h3v-2h2v3h-1v1H7v-1H6V3h1z"/>`;
+const glyph = `<rect x="12" y="8" width="8" height="48" fill="${I_COLOR}"/><path d="M48 23v-4a8 8 0 0 0-8-8h-4a8 8 0 0 0-8 8v26a8 8 0 0 0 8 8h4a8 8 0 0 0 8-8v-4" fill="none" stroke="${C_COLOR}" stroke-width="8"/>`;
+const pixelGlyph = `<path fill="${I_COLOR}" d="M3 2h2v12H3z"/><path fill="${C_COLOR}" d="M7 2h5v1h1v3h-2V4H8v8h3v-2h2v3h-1v1H7v-1H6V3h1z"/>`;
 
 const svg = (size, viewBox, body) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="${viewBox}">${body}</svg>`;
@@ -16,7 +18,7 @@ const svg = (size, viewBox, body) =>
 const tile = (size) =>
   size === 16
     ? svg(16, '0 0 16 16', `<rect width="16" height="16" rx="3" fill="${TILE}"/>${pixelGlyph}`)
-    : svg(size, '0 0 64 64', `<rect width="64" height="64" rx="14" fill="${TILE}"/>${glyph}`);
+    : svg(size, '0 0 64 64', `<rect x=".5" y=".5" width="63" height="63" rx="15.5" fill="${TILE}"/>${glyph}`);
 
 const square = (size, viewBox) => svg(size, viewBox, `<rect x="-100" y="-100" width="300" height="300" fill="${BG}"/>${glyph}`);
 
