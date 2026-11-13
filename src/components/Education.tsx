@@ -9,8 +9,7 @@ import {
   PrintOnly,
   ScreenOnly,
   Text,
-  NEW_TAB_HINT_ID,
-  effects,
+  VerifyLink,
   vars,
   type StyleProps,
 } from '../ui';
@@ -225,15 +224,10 @@ export function Education({ documents }: { documents: DocumentImages }) {
                   )}
                 </Text>
                 {certificate.url && (
-                  <Box
-                    as="a"
-                    group
+                  <VerifyLink
                     href={certificate.url}
-                    target="_blank"
-                    rel="noopener"
-                    aria-describedby={NEW_TAB_HINT_ID}
+                    label={certificate.title}
                     display={{ default: 'flex', print: 'inline' }}
-                    alignItems="center"
                     justifyContent="space-between"
                     gap="3"
                     width={{ default: '100%', print: 'auto' }}
@@ -242,26 +236,7 @@ export function Education({ documents }: { documents: DocumentImages }) {
                     paddingTop={{ default: '2', print: '0' }}
                     borderTop={{ default: `1px solid ${vars.color.line}`, print: 0 }}
                     fontSize={{ default: 14, print: 'inherit' }}
-                    fontWeight={{ default: 500, print: 400 }}
-                    color={{ default: vars.color.muted, hover: vars.color.white }}
-                    transition="color 0.3s"
-                  >
-                    <ScreenOnly>
-                      Verify credential
-                      <span className={effects.srOnly}>: {certificate.title}</span>
-                    </ScreenOnly>
-                    <Box
-                      as="span"
-                      aria-hidden
-                      display={{ print: 'none' }}
-                      color={vars.color.accentText}
-                      transform={{ default: 'none', groupHover: 'translate(2px, -2px)' }}
-                      transition={`transform 0.4s ${vars.ease}`}
-                    >
-                      ↗
-                    </Box>
-                    <PrintOnly> ({certificate.url})</PrintOnly>
-                  </Box>
+                  />
                 )}
               </Box>
             </Card>

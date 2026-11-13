@@ -5,6 +5,7 @@ export { Card } from './Card';
 export { Button } from './Button';
 export { TextLink, underline } from './TextLink';
 export { PrintOnly, ScreenOnly } from './PrintOnly';
+export { VerifyLink } from './VerifyLink';
 export { vars, lightTheme } from './theme.css';
 export * as effects from './effects.css';
 export * as intro from './intro.css';

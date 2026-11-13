@@ -8,7 +8,7 @@ import {
 import { useGSAP } from '@gsap/react';
 import { gsap } from '../lib/gsap';
 import { duration, ease } from '../lib/motion';
-import { Box, TextLink, effects, vars, type BoxProps, type StyleProps } from '../ui';
+import { Box, VerifyLink, effects, vars, type BoxProps, type StyleProps } from '../ui';
 import { motionOk } from '../ui/media';
 import { onFragmentNavigation } from '../lib/fragment-navigation';
 
@@ -165,9 +165,7 @@ export default function Lightbox() {
               {item.caption}
             </span>
             {item.verify && (
-              <TextLink href={item.verify} target="_blank" rel="noopener">
-                Verify certificate
-              </TextLink>
+              <VerifyLink href={item.verify} label={item.caption} />
             )}
           </Box>
         </Box>
