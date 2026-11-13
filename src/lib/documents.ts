@@ -3,6 +3,8 @@ import type { DocumentKey, LogoKey } from '../data/cv';
 
 import efset2026 from '../assets/cert-english-ef-set-b2-2026.png';
 import efset2024 from '../assets/cert-english-ef-set-b2-2024.png';
+import reactOneRoadmap from '../assets/cert-react-oneroadmap-2026.jpg';
+import javascriptOneRoadmap from '../assets/cert-javascript-oneroadmap-2026.jpg';
 import htmlCss from '../assets/cert-html-css-testprovider-2017.jpg';
 import javascript from '../assets/cert-javascript-essential-testprovider-2017.jpg';
 import php from '../assets/cert-php-starter-testprovider-2017.jpg';
@@ -19,6 +21,8 @@ import alevel from '../assets/logos/a-level.png';
 const SOURCES: Record<DocumentKey, ImageMetadata> = {
   efset2026,
   efset2024,
+  reactOneRoadmap,
+  javascriptOneRoadmap,
   htmlCss,
   javascript,
   php,

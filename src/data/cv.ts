@@ -3,6 +3,8 @@ export type LogoKey = 'fiverr' | 'auto1' | 'intelliceed' | 'brightgrove' | 'alev
 export type DocumentKey =
   | 'efset2026'
   | 'efset2024'
+  | 'reactOneRoadmap'
+  | 'javascriptOneRoadmap'
   | 'htmlCss'
   | 'javascript'
   | 'php'
@@ -438,6 +440,20 @@ export const certifications: Certification[] = [
     year: 2026,
     url: 'https://cert.efset.org/cbSU9g',
     image: 'efset2026',
+  },
+  {
+    title: 'React.JS Developer',
+    issuer: 'One Roadmap',
+    year: 2026,
+    url: 'https://www.oneroadmap.io/skills/react/certificate/CERT-2CCB3DC8',
+    image: 'reactOneRoadmap',
+  },
+  {
+    title: 'JavaScript',
+    issuer: 'One Roadmap',
+    year: 2026,
+    url: 'https://www.oneroadmap.io/skills/js/certificate/CERT-2179C946',
+    image: 'javascriptOneRoadmap',
   },
   {
     title: 'EF SET English Certificate 57/100 (B2 Upper Intermediate)',
