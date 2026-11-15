@@ -1,6 +1,6 @@
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { ease } from '../lib/motion';
-import { motionOk, reducedMotion } from '../ui/media';
+import { motionOk, reducedMotion } from '../styles/media';
 import { createJumpGuard, initReveals } from './reveal';
 
 function initScrollSpy(): void {

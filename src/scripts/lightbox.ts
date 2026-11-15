@@ -1,7 +1,7 @@
 import { gsap } from '../lib/gsap';
 import { duration, ease } from '../lib/motion';
 import { onFragmentNavigation } from '../lib/fragment-navigation';
-import { motionOk } from '../ui/media';
+import { motionOk } from '../styles/media';
 
 interface Item {
   src: string;
@@ -21,7 +21,9 @@ const toItem = (link: HTMLAnchorElement): Item => ({
   height: Number(link.dataset.height) || undefined,
 });
 
-export function initLightbox(): void {
+const noop = () => {};
+
+export function initLightbox(): () => void {
   const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox-dialog]');
   const figure = dialog?.querySelector<HTMLElement>('[data-lightbox-figure]');
   let image = dialog?.querySelector<HTMLImageElement>('[data-lightbox-image]');
@@ -31,8 +33,11 @@ export function initLightbox(): void {
   const verifyLabel = verify?.querySelector<HTMLElement>('[data-verify-label]');
   const prev = dialog?.querySelector<HTMLButtonElement>('[data-lightbox-prev]');
   const next = dialog?.querySelector<HTMLButtonElement>('[data-lightbox-next]');
-  if (!dialog || !figure || !image || !caption || !counter || !verify || !prev || !next) return;
+  if (!dialog || !figure || !image || !caption || !counter || !verify || !prev || !next)
+    return noop;
 
+  const listeners = new AbortController();
+  const { signal } = listeners;
   const blank = image.cloneNode(false) as HTMLImageElement;
   const motion = window.matchMedia(motionOk);
   let items: Item[] = [];
@@ -90,7 +95,7 @@ export function initLightbox(): void {
     if (dialog.open) dialog.close();
   };
 
-  document.addEventListener('click', (event) => {
+  const onDocumentClick = (event: MouseEvent) => {
     if (event.defaultPrevented || event.button !== 0) return;
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const link = (event.target as Element).closest<HTMLAnchorElement>(SELECTOR);
@@ -100,26 +105,36 @@ export function initLightbox(): void {
     items = links.map(toItem);
     show(links.indexOf(link));
     if (!dialog.open) dialog.showModal();
-  });
+  };
+  document.addEventListener('click', onDocumentClick, { signal });
 
-  dialog.addEventListener('click', (event) => {
+  const onBackdropClick = (event: MouseEvent) => {
     if (event.target === dialog) close();
-  });
-  dialog.addEventListener('close', () => {
+  };
+  const onClose = () => {
     entrance?.revert();
     entrance = null;
     items = [];
     index = -1;
-  });
-  dialog.querySelector('[data-lightbox-close]')?.addEventListener('click', close);
-  prev.addEventListener('click', () => step(-1));
-  next.addEventListener('click', () => step(1));
-
-  window.addEventListener('keydown', (event) => {
+  };
+  const onKeyDown = (event: KeyboardEvent) => {
     if (!dialog.open || items.length < 2) return;
     if (event.key === 'ArrowRight') step(1);
     if (event.key === 'ArrowLeft') step(-1);
-  });
+  };
 
-  onFragmentNavigation(close);
+  dialog.addEventListener('click', onBackdropClick, { signal });
+  dialog.addEventListener('close', onClose, { signal });
+  dialog.querySelector('[data-lightbox-close]')?.addEventListener('click', close, { signal });
+  prev.addEventListener('click', () => step(-1), { signal });
+  next.addEventListener('click', () => step(1), { signal });
+  window.addEventListener('keydown', onKeyDown, { signal });
+  const stopFragmentNavigation = onFragmentNavigation(close);
+
+  return () => {
+    close();
+    onClose();
+    listeners.abort();
+    stopFragmentNavigation();
+  };
 }

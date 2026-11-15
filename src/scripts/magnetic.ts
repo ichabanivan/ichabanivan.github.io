@@ -1,15 +1,16 @@
 import { gsap } from '../lib/gsap';
 import { duration, ease } from '../lib/motion';
-import { finePointer, motionOk } from '../ui/media';
+import { finePointer, motionOk } from '../styles/media';
 
 const SHELL = 7;
 const LABEL = 3;
 const PRESS = 0.97;
 const PRESS_DURATION = 0.2;
+const noop = () => {};
 
 function attach(shell: HTMLElement): () => void {
   const label = shell.querySelector<HTMLElement>('[data-magnetic-label]');
-  if (!label) return () => {};
+  if (!label) return noop;
 
   const tween = { duration: duration.fast, ease: ease.soft };
   const shellX = gsap.quickTo(shell, 'x', tween);
@@ -76,11 +77,13 @@ function attach(shell: HTMLElement): () => void {
   };
 }
 
-export function initMagnetic(): void {
+export function initMagnetic(): () => void {
   const buttons = gsap.utils.toArray<HTMLElement>('[data-magnetic]');
-  if (!buttons.length) return;
-  gsap.matchMedia().add(`${finePointer} and ${motionOk}`, () => {
+  if (!buttons.length) return noop;
+  const mediaContext = gsap.matchMedia();
+  mediaContext.add(`${finePointer} and ${motionOk}`, () => {
     const detach = buttons.map(attach);
     return () => detach.forEach((fn) => fn());
   });
+  return () => mediaContext.revert();
 }

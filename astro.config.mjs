@@ -4,9 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
-// React only renders at build time; without a client entrypoint Astro neither bundles
-// react-dom for the browser nor allows a `client:*` directive on a React component.
-const serverOnly = (integration) => ({
+const withoutClientRenderer = (integration) => ({
   ...integration,
   hooks: {
     ...integration.hooks,
@@ -23,6 +21,6 @@ export default defineConfig({
   trailingSlash: 'always',
   compressHTML: false,
   build: { inlineStylesheets: 'always' },
-  integrations: [sitemap(), serverOnly(react())],
+  integrations: [sitemap(), withoutClientRenderer(react())],
   vite: { plugins: [vanillaExtractPlugin()] },
 });

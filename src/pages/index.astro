@@ -1,17 +1,17 @@
 ---
 import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import Header from '../components/Header';
-import Hero from '../components/Hero';
-import About from '../components/About';
-import Marquee from '../components/Marquee';
-import Experience from '../components/Experience';
-import Skills from '../components/Skills';
-import Education from '../components/Education';
-import AdditionalInformation from '../components/AdditionalInformation';
-import Contact from '../components/Contact';
-import Footer from '../components/Footer';
-import Lightbox from '../components/Lightbox';
+import { Header } from '../components/Header';
+import { Hero } from '../components/Hero';
+import { About } from '../components/About';
+import { Marquee } from '../components/Marquee';
+import { Experience } from '../components/Experience';
+import { Skills } from '../components/Skills';
+import { Education } from '../components/Education';
+import { AdditionalInformation } from '../components/AdditionalInformation';
+import { Contact } from '../components/Contact';
+import { Footer } from '../components/Footer';
+import { Lightbox } from '../components/Lightbox';
 import { getDocumentImages, logos } from '../lib/documents';
 import portrait from '../assets/portrait.jpg';
 import { profile, currentEmployer, currentPosition } from '../data/cv';
@@ -24,6 +24,7 @@ const image = await getImage({
   format: 'webp',
   quality: 78,
 });
+
 const photo = {
   src: image.src,
   srcSet: image.srcSet.attribute,
