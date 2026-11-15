@@ -1,7 +1,6 @@
 import { writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
 
-// Brand kit (Mix, on red): red tile, white I, ink C
 const RED = '#cd0d2e';
 const BG = RED;
 const TILE = RED;

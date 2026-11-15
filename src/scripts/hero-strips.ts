@@ -1,18 +1,21 @@
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { duration, ease } from '../lib/motion';
 import { REST, stripWindow } from '../lib/hero-strips';
-import { finePointer, motionOk } from '../ui/media';
+import { finePointer, motionOk } from '../styles/media';
 
 const SCROLL_SHIFT = 60;
 
 const clamp = gsap.utils.clamp(0, 100);
 
-export function initHeroStrips(): void {
+const noop = () => {};
+
+export function initHeroStrips(): () => void {
   const hero = document.querySelector<HTMLElement>('[data-hero]');
-  if (!hero) return;
+  if (!hero) return noop;
   const strips = gsap.utils.toArray<HTMLElement>('[data-strip]', hero);
 
-  gsap.matchMedia().add({ motion: motionOk, fine: finePointer }, (ctx) => {
+  const mediaContext = gsap.matchMedia();
+  mediaContext.add({ motion: motionOk, fine: finePointer }, (ctx) => {
     const { motion, fine } = ctx.conditions as { motion: boolean; fine: boolean };
     if (!motion) return;
 
@@ -59,4 +62,6 @@ export function initHeroStrips(): void {
       });
     };
   });
+
+  return () => mediaContext.revert();
 }
