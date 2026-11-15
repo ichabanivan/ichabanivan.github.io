@@ -1,5 +1,6 @@
 import { marquee } from '../data/cv';
-import { Box, effects, vars } from '../ui';
+import { Box, vars } from '../ui';
+import { marqueeWord } from './Marquee.css';
 
 const ROW = [...marquee, ...marquee];
 
@@ -20,7 +21,7 @@ function Track({ words, direction }: { words: string[]; direction: 1 | -1 }) {
       color="transparent"
     >
       {words.map((word, i) => (
-        <span className={effects.marqueeWord} data-word={word} key={i} />
+        <span className={marqueeWord} data-word={word} key={i} />
       ))}
     </Box>
   );

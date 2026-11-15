@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import Section from './Section';
-import { PERIOD_WIDTH } from './Period';
+import { COLUMN_GAP, PERIOD_WIDTH } from './Period';
 import { skills, type SkillGroup } from '../data/cv';
-import { Box, PrintOnly, Text, lightTheme, skillStyles as s, vars } from '../ui';
+import { Box, PrintOnly, Text, lightTheme, vars } from '../ui';
+import * as s from './Skills.css';
 
 const COLUMNS = {
   default: 'minmax(0, 1fr)',
@@ -18,17 +19,12 @@ function SkillRow({ skill }: { skill: SkillGroup }) {
       display={{ default: 'grid', print: skill.printHidden ? 'none' : 'block' }}
       gridTemplateColumns={COLUMNS}
       alignItems="baseline"
-      gap={{ default: '2', md: 'clamp(24px, 4vw, 56px)' }}
+      gap={{ default: '2', md: COLUMN_GAP }}
       padding={{ default: 'clamp(16px, 2vw, 24px) 0', print: '0' }}
       borderTop={{ default: `1px solid ${vars.color.line}`, print: 0 }}
       breakInside={{ print: 'avoid' }}
     >
-      <Text
-        as="h3"
-        variant="eyebrow"
-        display={{ print: 'inline' }}
-        color={vars.color.muted}
-      >
+      <Text as="h3" variant="eyebrow" display={{ print: 'inline' }} color={vars.color.muted}>
         {skill.group}
         <PrintOnly>: </PrintOnly>
       </Text>

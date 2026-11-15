@@ -7,12 +7,12 @@ function initScrollSpy(): void {
   const links = gsap.utils.toArray<HTMLAnchorElement>('[data-nav-link]');
   const setCurrent = (id: string | null) => {
     links.forEach((link) => {
-      if (link.getAttribute('href') === `#${id}`) link.setAttribute('aria-current', 'true');
+      if (link.getAttribute('href') === `#${id}`) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
   };
-  gsap.utils.toArray<HTMLElement>('[data-section]').forEach((section) => {
-    const id = section.id === 'additional' ? 'education' : section.id;
+  gsap.utils.toArray<HTMLElement>('[data-section]').forEach((section, i) => {
+    const id = section.dataset.section ?? section.id;
     ScrollTrigger.create({
       trigger: section,
       start: 'top 45%',
@@ -21,7 +21,7 @@ function initScrollSpy(): void {
         if (self.isActive) setCurrent(id);
       },
       onLeaveBack: () => {
-        if (section.id === 'about') setCurrent(null);
+        if (i === 0) setCurrent(null);
       },
     });
   });

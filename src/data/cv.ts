@@ -153,7 +153,17 @@ export const skills: SkillGroup[] = [
   { group: 'Databases & Data Tools', items: ['MongoDB', 'PostgreSQL', 'Athena (AWS)', 'BigQuery'] },
   {
     group: 'Testing & Build Tools',
-    items: ['Jest', 'Playwright', 'Docker', 'Gulp', 'Webpack', 'Vite', 'Rollup', 'CircleCI', 'Jenkins'],
+    items: [
+      'Jest',
+      'Playwright',
+      'Docker',
+      'Gulp',
+      'Webpack',
+      'Vite',
+      'Rollup',
+      'CircleCI',
+      'Jenkins',
+    ],
   },
   {
     group: 'Monitoring, Logging & Analytics',
@@ -304,8 +314,11 @@ export const experience: Employer[] = [
         title: 'Senior Software Engineer',
         start: { label: 'January 2020', iso: '2020-01' },
         end: { label: 'April 2021', iso: '2021-04' },
-        summary: 'Cross-platform mobile applications for client projects, built with Flutter and React Native.',
-        highlights: ['Developed two cross-platform mobile applications with Flutter and React Native.'],
+        summary:
+          'Cross-platform mobile applications for client projects, built with Flutter and React Native.',
+        highlights: [
+          'Developed two cross-platform mobile applications with Flutter and React Native.',
+        ],
         projects: [
           {
             name: 'Motorsport management software',
@@ -376,7 +389,8 @@ export const experience: Employer[] = [
   },
 ];
 
-export const currentPosition = experience[0].positions[0];
+export const currentEmployer = experience[0];
+export const currentPosition = currentEmployer.positions[0];
 export const careerStart = experience.at(-1)!.positions.at(-1)!.start;
 
 export function employerPeriod({ positions }: Employer) {
@@ -388,12 +402,22 @@ export function employerPeriod({ positions }: Employer) {
   return { start, end };
 }
 
-export const education = [
+export interface Education {
+  school: string;
+  location: string;
+  degree: string;
+  diploma: DocumentKey;
+  start: Required<DateLabel>;
+  end: Required<DateLabel>;
+  details: string[];
+}
+
+export const education: Education[] = [
   {
     school: 'National Technical University “Kharkiv Polytechnic Institute”',
     location: 'Kharkiv, Ukraine',
     degree: 'Master’s degree, Computer Sciences',
-    diploma: 'masterComputerScience' as DocumentKey,
+    diploma: 'masterComputerScience',
     start: { label: 'September 2020', iso: '2020-09' },
     end: { label: 'December 2021', iso: '2021-12' },
     details: [
@@ -406,7 +430,7 @@ export const education = [
     school: 'National University “Yuri Kondratyuk Poltava Polytechnic”',
     location: 'Poltava, Ukraine',
     degree: 'Master’s degree, Oil and Gas Engineering',
-    diploma: 'masterOilGas' as DocumentKey,
+    diploma: 'masterOilGas',
     start: { label: 'September 2019', iso: '2019-09' },
     end: { label: 'December 2020', iso: '2020-12' },
     details: [
@@ -418,7 +442,7 @@ export const education = [
     school: 'National University “Yuri Kondratyuk Poltava Polytechnic”',
     location: 'Poltava, Ukraine',
     degree: 'Bachelor’s degree, Mining. Drilling Wells',
-    diploma: 'bachelorMining' as DocumentKey,
+    diploma: 'bachelorMining',
     start: { label: 'September 2016', iso: '2016-09' },
     end: { label: 'June 2019', iso: '2019-06' },
     details: ['Program Subject Area: Mining.', 'Educational Program: Drilling wells.'],

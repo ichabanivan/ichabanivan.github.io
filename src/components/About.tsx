@@ -1,10 +1,10 @@
 import Section from './Section';
-import { careerStart, currentPosition, experience, profile } from '../data/cv';
+import { careerStart, currentEmployer, currentPosition, profile } from '../data/cv';
 import { yearsSince } from '../lib/tenure';
 import { Box, Text, vars } from '../ui';
 
 const facts = [
-  { term: 'Current role', value: `${currentPosition.title}, ${experience[0].company}` },
+  { term: 'Current role', value: `${currentPosition.title}, ${currentEmployer.company}` },
   { term: 'Based in', value: profile.location },
 ];
 

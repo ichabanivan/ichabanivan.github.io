@@ -1,12 +1,11 @@
 import type { ReactNode } from 'react';
 import Section from './Section';
-import Period, { DateRange, PERIOD_WIDTH } from './Period';
+import Period, { COLUMN_GAP, DateRange, PERIOD_WIDTH } from './Period';
 import { employerPeriod, experience, type Employer, type Position } from '../data/cv';
 import type { Logo, Logos } from '../lib/documents';
 import { tenure } from '../lib/tenure';
 import { Box, Text, vars } from '../ui';
 
-const COLUMN_GAP = 'clamp(24px, 4vw, 56px)';
 const LINE_LEFT = `calc(${PERIOD_WIDTH} + ${COLUMN_GAP} / 2)`;
 const PRINT_FULL_ROW = { print: '1 / -1' } as const;
 
@@ -16,7 +15,15 @@ const Strong = ({ children }: { children: ReactNode }) => (
   </Box>
 );
 
-function EmployerEntry({ employer, logos, last }: { employer: Employer; logos: Logos; last: boolean }) {
+function EmployerEntry({
+  employer,
+  logos,
+  last,
+}: {
+  employer: Employer;
+  logos: Logos;
+  last: boolean;
+}) {
   const { start, end } = employerPeriod(employer);
   const grouped = employer.positions.length > 1;
   return (
@@ -86,7 +93,11 @@ function EmployerHeader({ employer, logos }: { employer: Employer; logos: Logos 
       gridColumn={{ print: '1' }}
       gridRow={{ print: '1' }}
     >
-      <Text as="h3" variant="display" fontSize={{ default: 'clamp(34px, 4vw, 52px)', print: '12pt' }}>
+      <Text
+        as="h3"
+        variant="display"
+        fontSize={{ default: 'clamp(34px, 4vw, 52px)', print: '12pt' }}
+      >
         {employer.company}
       </Text>
       {logo && <LogoImage logo={logo} />}
@@ -135,7 +146,13 @@ function PositionBlock({
       borderTop={{ default: first ? 0 : `1px solid ${vars.color.line}`, print: 0 }}
       breakInside={{ print: 'avoid-page' }}
     >
-      <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between" gap="2 6">
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="2 6"
+      >
         <Text
           as="h4"
           fontSize={{ default: 18, print: '10pt' }}
@@ -197,12 +214,7 @@ function PositionBlock({
 }
 
 const ListHeading = ({ children }: { children: ReactNode }) => (
-  <Text
-    as="h5"
-    variant="eyebrow"
-    marginTop={{ default: '5', print: '1' }}
-    color={vars.color.muted}
-  >
+  <Text as="h5" variant="eyebrow" marginTop={{ default: '5', print: '1' }} color={vars.color.muted}>
     {children}
   </Text>
 );

@@ -1,6 +1,6 @@
 import { keyframes, style } from '@vanilla-extract/css';
-import { vars } from './theme.css';
-import { media, motionOk } from './media';
+import { vars } from '../ui/theme.css';
+import { media, motionOk } from '../ui/media';
 
 const rise = keyframes({ from: { transform: 'scaleY(0)' } });
 const draw = keyframes({ from: { strokeDashoffset: 1 } });

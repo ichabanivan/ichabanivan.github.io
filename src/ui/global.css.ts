@@ -28,6 +28,7 @@ globalStyle('h1, h2, h3, h4, h5, p, ul, ol, dl, dd, address', { margin: 0 });
 globalStyle('ul, ol', { padding: 0, listStyle: 'none' });
 globalStyle('address', { fontStyle: 'normal' });
 globalStyle('img', { display: 'block', maxWidth: '100%' });
+globalStyle('[hidden]', { display: 'none !important' });
 globalStyle('a', { color: 'inherit', textDecoration: 'none' });
 
 globalStyle(':focus-visible', {
@@ -61,7 +62,12 @@ globalStyle('*, *::before, *::after', {
 
 globalStyle('html, body', {
   '@media': {
-    [print]: { background: vars.color.white, color: vars.color.text, fontSize: '9pt', lineHeight: 1.3 },
+    [print]: {
+      background: vars.color.white,
+      color: vars.color.text,
+      fontSize: '9pt',
+      lineHeight: 1.3,
+    },
   },
 });
 

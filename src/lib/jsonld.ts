@@ -1,4 +1,4 @@
-import { profile, experience, skills, languages, education, certifications } from '../data/cv';
+import { profile, currentEmployer, skills, languages, education, certifications } from '../data/cv';
 
 interface JsonLdInput {
   canonical: string;
@@ -46,7 +46,7 @@ export function buildJsonLd({ canonical, image, description, dateModified }: Jso
       addressLocality: profile.address.locality,
       addressCountry: profile.address.countryCode,
     },
-    worksFor: { '@type': 'Organization', name: experience[0].company },
+    worksFor: { '@type': 'Organization', name: currentEmployer.company },
     hasOccupation: {
       '@type': 'Occupation',
       name: profile.title,

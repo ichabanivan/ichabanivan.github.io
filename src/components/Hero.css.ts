@@ -1,6 +1,6 @@
 import { keyframes, style, styleVariants } from '@vanilla-extract/css';
-import { vars } from './theme.css';
-import { motionOk } from './media';
+import { vars } from '../ui/theme.css';
+import { finePointer, motionOk } from '../ui/media';
 
 const clip = (top: string, bottom: string) => `polygon(
   calc((var(--l) + var(--k) * (50 - var(${top})) / 100) * 1%) calc(var(${top}) * 1%),
@@ -19,7 +19,7 @@ export const strip = style({
   clipPath: clip('--t', '--b'),
   vars: { '--t': 'var(--t1)', '--b': 'var(--b1)' },
   '@media': {
-    '(hover: hover) and (pointer: fine)': { vars: { '--t': 'var(--t0)', '--b': 'var(--b0)' } },
+    [finePointer]: { vars: { '--t': 'var(--t0)', '--b': 'var(--b0)' } },
   },
 });
 

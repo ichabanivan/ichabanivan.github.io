@@ -1,6 +1,6 @@
 import { Box, type BoxProps } from './Box';
 import { vars } from './theme.css';
-import * as effects from './effects.css';
+import * as styles from './Button.css';
 import { NEW_TAB_HINT_ID } from './hints';
 
 type Props = BoxProps<'a'> & {
@@ -20,7 +20,7 @@ export function Button({
   const primary = variant === 'primary';
   const small = size === 'small';
 
-  const classes = [effects.button, primary && effects.buttonPrimary, className]
+  const classes = [styles.button, primary && styles.buttonPrimary, className]
     .filter(Boolean)
     .join(' ');
 
@@ -46,10 +46,10 @@ export function Button({
       aria-describedby={props.target === '_blank' ? NEW_TAB_HINT_ID : undefined}
       {...props}
     >
-      <span aria-hidden className={effects.buttonDeco} />
+      <span aria-hidden className={styles.buttonDeco} />
       <Box as="span" data-magnetic-label display="inline-flex" alignItems="center" gap="3">
         {children}
-        {icon && <span aria-hidden className={effects.buttonIcon} data-text={icon} />}
+        {icon && <span aria-hidden className={styles.buttonIcon} data-text={icon} />}
       </Box>
     </Box>
   );

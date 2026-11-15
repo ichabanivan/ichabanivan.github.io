@@ -1,6 +1,7 @@
 import { profile } from '../data/cv';
-import { Box, Button, effects, vars } from '../ui';
+import { Box, Button, hitArea, vars } from '../ui';
 import LogoMark from './Logo';
+import * as styles from './Header.css';
 
 const LINKS = [
   { href: '#about', label: 'Summary' },
@@ -16,11 +17,11 @@ export default function Header({ cvHref }: { cvHref: string }) {
   return (
     <Box
       as="header"
-      className={effects.headerBar}
+      className={styles.headerBar}
       data-header
       position="fixed"
       inset="0 0 auto 0"
-      zIndex={50}
+      zIndex={vars.layer.header}
       height={vars.space.headerH}
       display={{ print: 'none' }}
     >
@@ -36,7 +37,7 @@ export default function Header({ cvHref }: { cvHref: string }) {
           as="a"
           group
           href="#top"
-          className={effects.hitArea}
+          className={hitArea}
           aria-label={`${profile.name}, home`}
           display="inline-flex"
           alignItems="center"
@@ -74,7 +75,7 @@ export default function Header({ cvHref }: { cvHref: string }) {
             <Box
               as="span"
               key={bar}
-              className={effects.menuBar}
+              className={styles.menuBar}
               display="block"
               width={24}
               height={2}
@@ -89,7 +90,7 @@ export default function Header({ cvHref }: { cvHref: string }) {
           as="nav"
           id="site-nav"
           aria-label="Sections"
-          className={effects.navMenu}
+          className={styles.navMenu}
           display="flex"
           position={{ default: 'fixed', lg: 'static' }}
           inset={`${vars.space.headerH} 0 0 0`}
@@ -112,7 +113,7 @@ export default function Header({ cvHref }: { cvHref: string }) {
                   as="a"
                   href={link.href}
                   data-nav-link
-                  className={`${effects.navLink} ${effects.hitArea}`}
+                  className={`${styles.navLink} ${hitArea}`}
                   position="relative"
                   padding="2 0"
                   fontSize={{ default: 44, lg: 14 }}
@@ -133,13 +134,7 @@ export default function Header({ cvHref }: { cvHref: string }) {
               </li>
             ))}
           </Box>
-          <Button
-            variant="primary"
-            size="small"
-            href={cvHref}
-            download
-            icon="↓"
-          >
+          <Button variant="primary" size="small" href={cvHref} download icon="↓">
             Download CV
           </Button>
         </Box>
