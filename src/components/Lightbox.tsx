@@ -1,115 +1,13 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type MouseEvent as ReactMouseEvent,
-} from 'react';
-import { useGSAP } from '@gsap/react';
-import { gsap } from '../lib/gsap';
-import { duration, ease } from '../lib/motion';
-import { Box, VerifyLink, effects, vars, type BoxProps, type StyleProps } from '../ui';
-import { motionOk } from '../ui/media';
-import { onFragmentNavigation } from '../lib/fragment-navigation';
-
-interface Item {
-  src: string;
-  caption: string;
-  verify: string | null;
-  width?: number;
-  height?: number;
-}
-
-gsap.registerPlugin(useGSAP);
-
-const SELECTOR = 'a[data-lightbox]';
-
-const toItem = (link: HTMLAnchorElement): Item => ({
-  src: link.href,
-  caption: link.dataset.caption ?? '',
-  verify: link.dataset.verify ?? null,
-  width: Number(link.dataset.width) || undefined,
-  height: Number(link.dataset.height) || undefined,
-});
+import { Box, srOnly, VerifyLink, vars, type BoxProps, type StyleProps } from '../ui';
+import { dialog } from './Lightbox.css';
 
 export default function Lightbox() {
-  const dialog = useRef<HTMLDialogElement>(null);
-  const figure = useRef<HTMLElement>(null);
-  const [items, setItems] = useState<Item[]>([]);
-  const [index, setIndex] = useState<number | null>(null);
-
-  const item = index === null ? null : items[index];
-  const many = items.length > 1;
-
-  const step = useCallback(
-    (delta: number) =>
-      setIndex((current) =>
-        current === null ? current : (current + delta + items.length) % items.length,
-      ),
-    [items.length],
-  );
-
-  useEffect(() => {
-    const onClick = (event: MouseEvent) => {
-      if (event.defaultPrevented || event.button !== 0) return;
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const link = (event.target as Element).closest<HTMLAnchorElement>(SELECTOR);
-      if (!link) return;
-      event.preventDefault();
-      const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(SELECTOR));
-      setItems(links.map(toItem));
-      setIndex(links.indexOf(link));
-    };
-    document.addEventListener('click', onClick);
-    const stopNavigation = onFragmentNavigation(() => setIndex(null));
-    return () => {
-      document.removeEventListener('click', onClick);
-      stopNavigation();
-    };
-  }, []);
-
-  useEffect(() => {
-    const el = dialog.current;
-    if (!el) return;
-    if (index !== null && !el.open) el.showModal();
-    if (index === null && el.open) el.close();
-  }, [index]);
-
-  useGSAP(
-    () => {
-      if (index === null || !figure.current) return;
-      const mm = gsap.matchMedia();
-      mm.add(motionOk, () => {
-        gsap.fromTo(
-          figure.current,
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: duration.fast, ease: ease.soft },
-        );
-      });
-    },
-    { dependencies: [index], revertOnUpdate: true, scope: dialog },
-  );
-
-  useEffect(() => {
-    if (index === null || !many) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') step(1);
-      if (event.key === 'ArrowLeft') step(-1);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [index, many, step]);
-
   return (
     <Box
       as="dialog"
-      ref={dialog}
-      className={effects.dialog}
-      aria-label={item?.caption || 'Document'}
-      onClose={() => setIndex(null)}
-      onClick={(event: ReactMouseEvent<HTMLDialogElement>) => {
-        if (event.target === dialog.current) setIndex(null);
-      }}
+      data-lightbox-dialog
+      className={dialog}
+      aria-label="Document"
       width="100vw"
       maxWidth="none"
       height="100dvh"
@@ -121,68 +19,53 @@ export default function Lightbox() {
       color={vars.color.text}
       overflow="auto"
     >
-      {item && (
+      <Box
+        as="figure"
+        data-lightbox-figure
+        display="grid"
+        gap="4"
+        justifyItems="center"
+        margin="0"
+        maxWidth="100%"
+      >
         <Box
-          as="figure"
-          ref={figure}
-          display="grid"
-          gap="4"
-          justifyItems="center"
-          margin="0"
+          as="img"
+          data-lightbox-image
+          alt=""
+          width="auto"
           maxWidth="100%"
+          height="auto"
+          maxHeight="calc(100dvh - 190px)"
+          borderRadius={8}
+          background={vars.color.paper}
+        />
+        <Box
+          as="figcaption"
+          display="flex"
+          flexWrap="wrap"
+          justifyContent="center"
+          gap="2 5"
+          fontSize={15}
+          textAlign="center"
+          color={vars.color.muted}
+          aria-live="polite"
         >
-          <Box
-            as="img"
-            src={item.src}
-            htmlWidth={item.width}
-            htmlHeight={item.height}
-            alt={item.caption}
-            key={item.src}
-            width="auto"
-            maxWidth="100%"
-            height="auto"
-            maxHeight="calc(100dvh - 190px)"
-            borderRadius={8}
-            background={vars.color.paper}
-          />
-          <Box
-            as="figcaption"
-            display="flex"
-            flexWrap="wrap"
-            justifyContent="center"
-            gap="2 5"
-            fontSize={15}
-            textAlign="center"
-            color={vars.color.muted}
-            aria-live="polite"
-          >
-            <span>
-              {many && index !== null && (
-                <span className={effects.srOnly}>
-                  Document {index + 1} of {items.length}.{' '}
-                </span>
-              )}
-              {item.caption}
-            </span>
-            {item.verify && (
-              <VerifyLink href={item.verify} label={item.caption} />
-            )}
-          </Box>
+          <span>
+            <span className={srOnly} data-lightbox-counter />
+            <span data-lightbox-caption />
+          </span>
+          <VerifyLink href="" label="" data-lightbox-verify hidden />
         </Box>
-      )}
-      <RoundButton aria-label="Close" onClick={() => setIndex(null)} top={12} right={12}>
+      </Box>
+      <RoundButton aria-label="Close" data-lightbox-close top={12} right={12}>
         ×
       </RoundButton>
-      {many && (
-        <>
-          <RoundButton aria-label="Previous document" onClick={() => step(-1)} left={12} {...SIDE}>
-            ‹
-          </RoundButton>
-          <RoundButton aria-label="Next document" onClick={() => step(1)} right={12} {...SIDE}>
-            ›
-          </RoundButton>
-        </>
-      )}
+      <RoundButton aria-label="Previous document" data-lightbox-prev hidden left={12} {...SIDE}>
+        ‹
+      </RoundButton>
+      <RoundButton aria-label="Next document" data-lightbox-next hidden right={12} {...SIDE}>
+        ›
+      </RoundButton>
     </Box>
   );
 }

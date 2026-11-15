@@ -2,6 +2,8 @@ import { SplitText } from 'gsap/SplitText';
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { duration, ease, stagger } from '../lib/motion';
 
+gsap.registerPlugin(SplitText);
+
 type Dir = 1 | -1;
 
 type Unit = {
@@ -14,6 +16,11 @@ type Unit = {
 export type Scale = { offset: number; time: number };
 
 const OFFSCREEN = { start: 'top bottom', end: 'bottom top' };
+
+const HEADING_DURATION = 0.8;
+const SKILL_ITEM_DURATION = 0.4;
+const SKILL_ITEM_SPREAD = 0.25;
+const OFFSET = { block: 32, row: 16, item: 8 };
 
 const from = (dir: Dir) => (dir > 0 ? 'start' : 'end');
 
@@ -125,7 +132,7 @@ function headings(targets: HTMLElement[], scale: Scale): Unit {
             { yPercent: 100 * dir },
             {
               yPercent: 0,
-              duration: 0.8 * scale.time,
+              duration: HEADING_DURATION * scale.time,
               ease: ease.out,
               stagger: { each: stagger.chars, from: from(dir) },
               overwrite: 'auto',
@@ -162,7 +169,7 @@ function blocks(targets: HTMLElement[], scale: Scale): Unit {
       gsap.killTweensOf(els);
       gsap.fromTo(
         els,
-        { opacity: 0, y: 32 * scale.offset * dir },
+        { opacity: 0, y: OFFSET.block * scale.offset * dir },
         {
           opacity: 1,
           y: 0,
@@ -217,18 +224,24 @@ function skillRows(targets: HTMLElement[], scale: Scale): Unit {
           })
           .fromTo(
             row,
-            { opacity: 0, y: 16 * scale.offset * dir },
-            { opacity: 1, y: 0, duration: 0.5 * scale.time, ease: ease.soft, overwrite: 'auto' },
-          )
-          .fromTo(
-            lis,
-            { opacity: 0, y: 8 * scale.offset * dir },
+            { opacity: 0, y: OFFSET.row * scale.offset * dir },
             {
               opacity: 1,
               y: 0,
-              duration: 0.4 * scale.time,
+              duration: duration.fast * scale.time,
               ease: ease.soft,
-              stagger: { amount: 0.25, from: from(dir) },
+              overwrite: 'auto',
+            },
+          )
+          .fromTo(
+            lis,
+            { opacity: 0, y: OFFSET.item * scale.offset * dir },
+            {
+              opacity: 1,
+              y: 0,
+              duration: SKILL_ITEM_DURATION * scale.time,
+              ease: ease.soft,
+              stagger: { amount: SKILL_ITEM_SPREAD, from: from(dir) },
               overwrite: 'auto',
             },
             0.1,
@@ -254,7 +267,6 @@ function skillRows(targets: HTMLElement[], scale: Scale): Unit {
 }
 
 export function initReveals(jump: JumpGuard, scale: Scale): () => void {
-  gsap.registerPlugin(SplitText);
   const all = (selector: string) => gsap.utils.toArray<HTMLElement>(selector);
   const cleanups = [
     revealOnScroll(all('[data-split]'), headings(all('[data-split]'), scale), jump, {

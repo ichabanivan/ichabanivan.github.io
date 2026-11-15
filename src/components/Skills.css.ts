@@ -1,8 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from './theme.css';
-import { media } from './media';
-
-const finePointer = '(hover: hover) and (pointer: fine)';
+import { vars } from '../ui/theme.css';
+import { finePointer, media } from '../ui/media';
 
 export const backdrop = style({
   position: 'absolute',
@@ -16,7 +14,11 @@ export const item = style({
   display: 'inline',
   whiteSpace: 'nowrap',
   selectors: {
-    '&:not(:last-child)::after': { content: "'/'", marginLeft: '0.35em', color: vars.color.outline },
+    '&:not(:last-child)::after': {
+      content: "'/'",
+      marginLeft: '0.35em',
+      color: vars.color.outline,
+    },
   },
   '@media': {
     [media.print]: { whiteSpace: 'normal', selectors: { '&::after': { content: 'none' } } },

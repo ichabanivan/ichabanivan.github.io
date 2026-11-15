@@ -3,20 +3,29 @@ import { Box, Container, Text, vars, type StyleProps } from '../ui';
 
 type Props = StyleProps & {
   id: string;
+  navTarget?: string;
   index: string;
   title: string;
   className?: string;
   children: ReactNode;
 };
 
-export default function Section({ id, index, title, className, children, ...style }: Props) {
+export default function Section({
+  id,
+  navTarget,
+  index,
+  title,
+  className,
+  children,
+  ...style
+}: Props) {
   const titleId = `${id}-title`;
   return (
     <Box
       as="section"
       id={id}
       aria-labelledby={titleId}
-      data-section
+      data-section={navTarget ?? id}
       className={className}
       paddingBlock={vars.space.section}
       {...style}

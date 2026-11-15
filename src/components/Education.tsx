@@ -1,18 +1,8 @@
-import type { ReactNode } from 'react';
 import Section from './Section';
-import Period, { PERIOD_WIDTH } from './Period';
-import { education, certifications, volunteering, languages, type Certification } from '../data/cv';
+import Period, { COLUMN_GAP, PERIOD_WIDTH } from './Period';
+import { education, certifications, type Certification } from '../data/cv';
 import type { DocumentImage, DocumentImages } from '../lib/documents';
-import {
-  Box,
-  Card,
-  PrintOnly,
-  ScreenOnly,
-  Text,
-  VerifyLink,
-  vars,
-  type StyleProps,
-} from '../ui';
+import { Box, Card, PrintOnly, Text, VerifyLink, vars, type StyleProps } from '../ui';
 
 type ThumbProps = StyleProps & {
   image: DocumentImage;
@@ -94,7 +84,7 @@ const printInline = {
   fontWeight: { print: 400 },
 } satisfies StyleProps;
 
-export function Education({ documents }: { documents: DocumentImages }) {
+export default function Education({ documents }: { documents: DocumentImages }) {
   return (
     <Section id="education" index="04" title="Education">
       <Box display="grid" gap={{ default: '4', print: '0' }}>
@@ -109,7 +99,7 @@ export function Education({ documents }: { documents: DocumentImages }) {
               lg: `${PERIOD_WIDTH} minmax(0, 1fr) minmax(0, 220px)`,
             }}
             alignItems="start"
-            gap={{ default: '3', lg: 'clamp(24px, 4vw, 56px)' }}
+            gap={{ default: '3', lg: COLUMN_GAP }}
             padding={{ default: 'clamp(20px, 3vw, 36px) 0', print: '0 0 2' }}
             borderTop={{ default: `1px solid ${vars.color.line}`, print: 0 }}
             borderBottom={
@@ -189,7 +179,7 @@ export function Education({ documents }: { documents: DocumentImages }) {
             <Card
               as="li"
               data-reveal
-              key={certificate.title}
+              key={`${certificate.title}|${certificate.issuer}|${certificate.year ?? ''}`}
               display={{ default: 'flex', print: 'block' }}
               flexDirection="column"
               gap="4"
@@ -242,58 +232,6 @@ export function Education({ documents }: { documents: DocumentImages }) {
             </Card>
           ))}
         </Box>
-      </Box>
-    </Section>
-  );
-}
-
-function InfoCard({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <Card data-reveal marginBottom={{ print: '1' }}>
-      <Text as="h2" variant="eyebrow" display={{ print: 'inline' }}>
-        {title}
-        <PrintOnly>: </PrintOnly>
-      </Text>
-      <Box
-        as="ul"
-        display={{ default: 'grid', print: 'inline' }}
-        gap={{ default: '3', print: '1' }}
-        marginTop={{ default: '4', print: '1' }}
-        color={vars.color.text}
-      >
-        {children}
-      </Box>
-    </Card>
-  );
-}
-
-export function AdditionalInformation() {
-  return (
-    <Section id="additional" index="05" title="Additional Information">
-      <Box
-        display={{ default: 'grid', print: 'block' }}
-        gridTemplateColumns={{ default: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }}
-        gap="4"
-      >
-        <InfoCard title="Languages">
-          {languages.map((language, i) => (
-            <Box as="li" key={language.name} display={{ print: 'inline' }}>
-              {language.name}{' '}
-              <Box as="span" color={vars.color.muted}>
-                ({language.level})
-              </Box>
-              {i < languages.length - 1 && <PrintOnly>, </PrintOnly>}
-            </Box>
-          ))}
-        </InfoCard>
-        <InfoCard title="Volunteering">
-          {volunteering.map((item) => (
-            <Box as="li" key={item.organization + item.start.iso} display={{ print: 'inline' }}>
-              {item.organization}: {item.role}, <time dateTime={item.start.iso}>{item.start.label}</time> to{' '}
-              <time dateTime={item.end.iso}>{item.end.label}</time>. {item.note}
-            </Box>
-          ))}
-        </InfoCard>
       </Box>
     </Section>
   );

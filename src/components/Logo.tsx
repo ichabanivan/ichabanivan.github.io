@@ -1,4 +1,5 @@
-import { Box, logoStyles as s, type BoxProps } from '../ui';
+import { Box, type BoxProps } from '../ui';
+import * as s from './Logo.css';
 
 const ARC = 'M48 23v-4a8 8 0 0 0-8-8h-4a8 8 0 0 0-8 8v26a8 8 0 0 0 8 8h4a8 8 0 0 0 8-8v-4';
 

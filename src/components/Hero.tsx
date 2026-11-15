@@ -1,22 +1,8 @@
-import { useRef, type CSSProperties } from 'react';
-import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '../lib/gsap';
-import { ease } from '../lib/motion';
+import type { CSSProperties } from 'react';
 import { profile } from '../data/cv';
-import { motionOk } from '../ui/media';
-import {
-  Box,
-  Button,
-  effects,
-  intro,
-  NEW_TAB_HINT_ID,
-  PrintOnly,
-  Text,
-  vars,
-  type BoxProps,
-} from '../ui';
-
-gsap.registerPlugin(useGSAP);
+import { REST, stripWindow } from '../lib/hero-strips';
+import { Box, Button, hitArea, NEW_TAB_HINT_ID, PrintOnly, Text, vars, type BoxProps } from '../ui';
+import * as intro from './Hero.css';
 
 export interface HeroPhoto {
   src: string;
@@ -38,32 +24,12 @@ const STRIPS = [
 ];
 const ACCENT_STRIP = { l: 89.5, w: 1 };
 
-const WINDOWS: { top: (h: number) => number; bottom: (h: number) => number }[] = [
-  { top: (h) => h / 3, bottom: (h) => 30 + h / 3 },
-  { top: (h) => h / 7, bottom: (h) => 75 + h / 7 },
-  { top: (h) => 10 + h / 10, bottom: (h) => 85 + h / 10 },
-  { top: (h) => 10 + h / 15, bottom: (h) => 95 + h / 15 },
-  { top: (h) => 20 + h / 8, bottom: (h) => 85 + h / 8 },
-  { top: (h) => 12 + h / 2.5, bottom: (h) => 52 + h / 2.5 },
-];
-
 const HERO_SIZES =
   '(min-width: 992px) min(58vw, 94svh), (min-width: 768px) min(100vw, 56svh), min(100vw, 70svh)';
 
-const FINE_POINTER = '(hover: hover) and (pointer: fine)';
-const REST = { fine: 50, coarse: 30 };
-
-const clamp = gsap.utils.clamp(0, 100);
-const round = (n: number) => Math.round(n * 100) / 100;
-
-const at = (i: number, h: number) => ({
-  t: round(WINDOWS[i].top(h)),
-  b: round(Math.min(100, WINDOWS[i].bottom(h))),
-});
-
 const stripStyle = (s: typeof ACCENT_STRIP, i: number) => {
-  const fine = at(i, REST.fine);
-  const coarse = at(i, REST.coarse);
+  const fine = stripWindow(i, REST.fine);
+  const coarse = stripWindow(i, REST.coarse);
   return {
     '--l': s.l,
     '--w': s.w,
@@ -76,73 +42,13 @@ const stripStyle = (s: typeof ACCENT_STRIP, i: number) => {
 };
 
 export default function Hero({ photo }: Props) {
-  const root = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const hero = root.current;
-      if (!hero) return;
-      const strips = gsap.utils.toArray<HTMLElement>('[data-strip]', hero);
-
-      const mm = gsap.matchMedia();
-      mm.add({ motion: motionOk, fine: FINE_POINTER }, (ctx) => {
-        const { motion, fine } = ctx.conditions as { motion: boolean; fine: boolean };
-        if (!motion) return;
-
-        const rest = fine ? REST.fine : REST.coarse;
-        const state = { h: rest };
-        let pointerH = rest;
-        let progress = 0;
-
-        const render = () =>
-          strips.forEach((strip, i) => {
-            const { t, b } = at(i, state.h);
-            strip.style.setProperty('--t', String(t));
-            strip.style.setProperty('--b', String(b));
-          });
-
-        const moveTo = gsap.quickTo(state, 'h', {
-          duration: 0.9,
-          ease: ease.soft,
-          onUpdate: render,
-        });
-        const update = () => moveTo(clamp(pointerH + progress * 60));
-
-        const onPointerMove = (event: PointerEvent) => {
-          pointerH = (event.clientY / window.innerHeight) * 100;
-          update();
-        };
-        if (fine) window.addEventListener('pointermove', onPointerMove, { passive: true });
-
-        ScrollTrigger.create({
-          trigger: hero,
-          start: 'top top',
-          end: 'bottom top',
-          onUpdate: (self) => {
-            progress = self.progress;
-            update();
-          },
-        });
-
-        return () => {
-          window.removeEventListener('pointermove', onPointerMove);
-          strips.forEach((strip) => {
-            strip.style.removeProperty('--t');
-            strip.style.removeProperty('--b');
-          });
-        };
-      });
-    },
-    { scope: root },
-  );
-
   const gutter = vars.space.gutter;
 
   return (
     <Box
       as="section"
       id="top"
-      ref={root}
+      data-hero
       position="relative"
       display={{ default: 'grid', print: 'block' }}
       gridTemplateColumns={{ default: 'minmax(0, 1fr)', lg: 'repeat(12, minmax(0, 1fr))' }}
@@ -317,7 +223,7 @@ function ContactLink(props: BoxProps<'a'>) {
   return (
     <Box
       as="a"
-      className={effects.hitArea}
+      className={hitArea}
       color={{ hover: vars.color.white }}
       aria-describedby={describedBy}
       {...props}

@@ -1,21 +1,23 @@
 import { gsap } from '../lib/gsap';
+import { duration, ease } from '../lib/motion';
 import { finePointer, motionOk } from '../ui/media';
 
 const SHELL = 7;
 const LABEL = 3;
 const PRESS = 0.97;
+const PRESS_DURATION = 0.2;
 
 function attach(shell: HTMLElement): () => void {
   const label = shell.querySelector<HTMLElement>('[data-magnetic-label]');
   if (!label) return () => {};
 
-  const tween = { duration: 0.5, ease: 'power3.out' };
+  const tween = { duration: duration.fast, ease: ease.soft };
   const shellX = gsap.quickTo(shell, 'x', tween);
   const shellY = gsap.quickTo(shell, 'y', tween);
   const labelX = gsap.quickTo(label, 'x', tween);
   const labelY = gsap.quickTo(label, 'y', tween);
   const scale = (value: number) =>
-    gsap.to(shell, { scale: value, duration: 0.2, ease: 'power3.out', overwrite: 'auto' });
+    gsap.to(shell, { scale: value, duration: PRESS_DURATION, ease: ease.soft, overwrite: 'auto' });
 
   let box = { left: 0, top: 0, width: 1, height: 1 };
   const measure = () => {

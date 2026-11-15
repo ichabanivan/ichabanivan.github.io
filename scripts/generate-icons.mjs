@@ -18,11 +18,19 @@ const svg = (size, viewBox, body) =>
 const tile = (size) =>
   size === 16
     ? svg(16, '0 0 16 16', `<rect width="16" height="16" rx="3" fill="${TILE}"/>${pixelGlyph}`)
-    : svg(size, '0 0 64 64', `<rect x=".5" y=".5" width="63" height="63" rx="15.5" fill="${TILE}"/>${glyph}`);
+    : svg(
+        size,
+        '0 0 64 64',
+        `<rect x=".5" y=".5" width="63" height="63" rx="15.5" fill="${TILE}"/>${glyph}`,
+      );
 
-const square = (size, viewBox) => svg(size, viewBox, `<rect x="-100" y="-100" width="300" height="300" fill="${BG}"/>${glyph}`);
+const square = (size, viewBox) =>
+  svg(size, viewBox, `<rect x="-100" y="-100" width="300" height="300" fill="${BG}"/>${glyph}`);
 
-const png = (source, opts = {}) => sharp(Buffer.from(source)).png({ compressionLevel: 9, ...opts }).toBuffer();
+const png = (source, opts = {}) =>
+  sharp(Buffer.from(source))
+    .png({ compressionLevel: 9, ...opts })
+    .toBuffer();
 
 function ico(images) {
   const header = Buffer.alloc(6 + images.length * 16);
@@ -46,21 +54,35 @@ function ico(images) {
 }
 
 const icoSizes = [16, 32, 48];
-const icoImages = await Promise.all(icoSizes.map(async (size) => ({ size, data: await png(tile(size)) })));
+const icoImages = await Promise.all(
+  icoSizes.map(async (size) => ({ size, data: await png(tile(size)) })),
+);
 await writeFile(out('favicon.ico'), ico(icoImages));
 
 const flatten = { background: BG };
 await writeFile(
   out('apple-touch-icon.png'),
-  await sharp(Buffer.from(square(180, '-8 -8 80 80'))).flatten(flatten).png({ compressionLevel: 9 }).toBuffer(),
+  await sharp(Buffer.from(square(180, '-8 -8 80 80')))
+    .flatten(flatten)
+    .png({ compressionLevel: 9 })
+    .toBuffer(),
 );
 await writeFile(out('icon-192.png'), await png(tile(192)));
 await writeFile(out('icon-512.png'), await png(tile(512)));
 await writeFile(
   out('icon-512-maskable.png'),
-  await sharp(Buffer.from(square(512, '-24 -24 112 112'))).flatten(flatten).png({ compressionLevel: 9 }).toBuffer(),
+  await sharp(Buffer.from(square(512, '-24 -24 112 112')))
+    .flatten(flatten)
+    .png({ compressionLevel: 9 })
+    .toBuffer(),
 );
 
-for (const name of ['favicon.ico', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-512-maskable.png']) {
+for (const name of [
+  'favicon.ico',
+  'apple-touch-icon.png',
+  'icon-192.png',
+  'icon-512.png',
+  'icon-512-maskable.png',
+]) {
   console.log(name);
 }

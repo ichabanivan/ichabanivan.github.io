@@ -1,6 +1,9 @@
 import Section from './Section';
 import { profile } from '../data/cv';
-import { Box, Button, Text, underline, vars } from '../ui';
+import { Box, Button, Text, vars } from '../ui';
+
+const underline = (thickness: string) =>
+  `linear-gradient(${vars.color.accent}, ${vars.color.accent}) no-repeat 0 100% / 100% ${thickness}`;
 
 interface Props {
   cvHref: string;
@@ -59,26 +62,5 @@ export default function Contact({ cvHref }: Props) {
         </Button>
       </Box>
     </Section>
-  );
-}
-
-export function Footer({ year }: { year: number }) {
-  return (
-    <Box
-      as="footer"
-      display={{ default: 'flex', print: 'none' }}
-      flexWrap="wrap"
-      justifyContent="space-between"
-      gap="2 6"
-      padding={`7 ${vars.space.gutter}`}
-      borderTop={`1px solid ${vars.color.line}`}
-      fontSize={14}
-      color={vars.color.muted}
-    >
-      <p>
-        © {year} {profile.name}
-      </p>
-      <p>{profile.location}</p>
-    </Box>
   );
 }

@@ -55,7 +55,6 @@ export const vars = createGlobalTheme(':root', {
   color: {
     bg: BG,
     surface: '#131315',
-    surface2: '#1b1b1e',
     line: 'rgba(255, 255, 255, 0.1)',
     text: '#ececee',
     muted: '#a1a1aa',
@@ -80,6 +79,9 @@ export const vars = createGlobalTheme(':root', {
     section: 'clamp(88px, 12vw, 168px)',
     headerH: '64px',
   },
+  layer: {
+    header: '50',
+  },
   radius: '14px',
   ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
   easeExpo: 'cubic-bezier(0.16, 1, 0.3, 1)',
@@ -92,7 +94,6 @@ globalStyle(':root', {
       vars: {
         [vars.color.bg]: '#fff',
         [vars.color.surface]: '#fff',
-        [vars.color.surface2]: '#fff',
         [vars.color.line]: '#ccc',
         [vars.color.text]: '#000',
         [vars.color.muted]: '#222',
@@ -111,7 +112,6 @@ export const lightTheme = style({
       vars: {
         [vars.color.bg]: '#f4f3ef',
         [vars.color.surface]: '#ebeae5',
-        [vars.color.surface2]: '#e3e2dc',
         [vars.color.line]: 'rgba(11, 11, 12, 0.12)',
         [vars.color.text]: '#1c1c1f',
         [vars.color.muted]: '#5f5f66',

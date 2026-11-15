@@ -3,6 +3,7 @@ import type { DateLabel } from '../data/cv';
 import { Box, Text, vars, type StyleProps } from '../ui';
 
 export const PERIOD_WIDTH = '260px';
+export const COLUMN_GAP = 'clamp(24px, 4vw, 56px)';
 
 type Props = StyleProps & {
   start: Required<DateLabel>;
