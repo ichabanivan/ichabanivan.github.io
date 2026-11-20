@@ -5,6 +5,7 @@ import { initScroll } from './scroll';
 import { initHeroStrips } from './hero-strips';
 import { initMagnetic } from './magnetic';
 import { initLightbox } from './lightbox';
+import { initAnalytics } from './analytics';
 
 declare global {
   interface Window {
@@ -20,4 +21,5 @@ initScroll({ animate });
 initHeroStrips();
 initMagnetic();
 initLightbox();
+initAnalytics();
 document.fonts?.ready.then(() => ScrollTrigger.refresh());
