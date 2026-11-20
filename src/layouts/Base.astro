@@ -16,6 +16,9 @@ const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(`${base}og.jpg?v=2`, Astro.site).href;
 const ogImageAlt = `${profile.name}, ${profile.title}`;
+const GOOGLE_TAG_ID = 'GTM-KJCMZ6M5';
+const googleTagUrl = `https://www.googletagmanager.com/gtm.js?id=${GOOGLE_TAG_ID}`;
+const analyticsEnabled = import.meta.env.PROD;
 
 const jsonLd = buildJsonLd({
   canonical,
@@ -30,6 +33,18 @@ const jsonLd = buildJsonLd({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {analyticsEnabled && (
+      <>
+        <script is:inline async src={googleTagUrl} data-analytics />
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+        </script>
+      </>
+    )}
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
@@ -80,7 +95,9 @@ const jsonLd = buildJsonLd({
         addEventListener(
           'error',
           function (e) {
-            if (e.target && e.target.tagName === 'SCRIPT') bail();
+            var failed = e.target;
+            if (failed && failed.tagName === 'SCRIPT' && !failed.hasAttribute('data-analytics'))
+              bail();
           },
           true,
         );
