@@ -14,14 +14,16 @@ declare global {
   }
 }
 
-initHeader();
-refreshTenures();
-const animate = document.documentElement.classList.contains('js');
-window.__motionReady = true;
-initScroll({ animate });
-initHeroStrips();
-initMagnetic();
-initLightbox();
-initAnalytics();
-initConsent();
-document.fonts?.ready.then(() => ScrollTrigger.refresh());
+export function startPage() {
+  initHeader();
+  refreshTenures();
+  const animate = document.documentElement.classList.contains('js');
+  window.__motionReady = true;
+  initScroll({ animate });
+  initHeroStrips();
+  initMagnetic();
+  initLightbox();
+  initAnalytics();
+  initConsent();
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+}

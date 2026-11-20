@@ -37,6 +37,16 @@ const jsonLd = buildJsonLd({
       (function () {
         var EXCLUDE_KEY = 'analytics_exclude';
         var CONSENT_KEY = 'analytics_consent';
+        var TAG_IDLE_DELAY_MS = 5000;
+        var FIRST_INTERACTIONS = [
+          'pointerdown',
+          'pointermove',
+          'touchstart',
+          'keydown',
+          'wheel',
+          'scroll',
+        ];
+        var LISTENER_OPTIONS = { capture: true, passive: true };
         var storage = {
           read: function (key) {
             try {
@@ -92,15 +102,33 @@ const jsonLd = buildJsonLd({
           ad_user_data: 'denied',
           ad_personalization: 'denied',
         });
-        if (storage.read(CONSENT_KEY) === 'granted')
+        var storedConsent = storage.read(CONSENT_KEY);
+        window.analyticsConsentPending = storedConsent === null;
+        if (storedConsent === 'granted')
           window.gtag('consent', 'update', { analytics_storage: 'granted' });
         window.gtag('js', new Date());
 
-        var tag = document.createElement('script');
-        tag.async = true;
-        tag.src = googleTagUrl;
-        tag.setAttribute('data-analytics', '');
-        document.head.appendChild(tag);
+        var tagRequested = false;
+        var requestTag = function () {
+          if (tagRequested) return;
+          tagRequested = true;
+          FIRST_INTERACTIONS.forEach(function (type) {
+            removeEventListener(type, requestTag, LISTENER_OPTIONS);
+          });
+          var tag = document.createElement('script');
+          tag.async = true;
+          tag.src = googleTagUrl;
+          tag.setAttribute('data-analytics', '');
+          document.head.appendChild(tag);
+        };
+        FIRST_INTERACTIONS.forEach(function (type) {
+          addEventListener(type, requestTag, LISTENER_OPTIONS);
+        });
+        var requestTagWhenIdle = function () {
+          setTimeout(requestTag, TAG_IDLE_DELAY_MS);
+        };
+        if (document.readyState === 'complete') requestTagWhenIdle();
+        else addEventListener('load', requestTagWhenIdle);
       })();
     </script>}
     <title>{title}</title>
@@ -172,10 +200,17 @@ const jsonLd = buildJsonLd({
       Opens in a new tab
     </span>
     <slot />
+    {analyticsEnabled && <script is:inline>
+      (function () {
+        var banner = document.querySelector('[data-consent-banner]');
+        if (banner && window.analyticsConsentPending) banner.hidden = false;
+      })();
+    </script>}
     <script>
       import { afterPaint } from '../lib/after-paint';
+      import { startPage } from '../scripts/main';
 
-      afterPaint(() => import('../scripts/main.ts'));
+      afterPaint(startPage);
     </script>
   </body>
 </html>
