@@ -8,9 +8,8 @@ export function ConsentButton(props: ConsentButtonProps) {
     <Box
       as="button"
       type="button"
-      flex="1"
       minHeight={44}
-      padding="0 5"
+      padding="0 3"
       border="1px solid"
       borderColor={{ default: vars.color.line, hover: vars.color.textStrong }}
       borderRadius={999}
