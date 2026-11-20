@@ -69,6 +69,7 @@ export function initLightbox(): () => void {
     verify.hidden = !item.verify;
     if (item.verify) {
       verify.href = item.verify;
+      verify.dataset.trackDocument = item.caption;
       if (verifyLabel) verifyLabel.textContent = `: ${item.caption}`;
       if (verify.lastElementChild) verify.lastElementChild.textContent = ` (${item.verify})`;
     }

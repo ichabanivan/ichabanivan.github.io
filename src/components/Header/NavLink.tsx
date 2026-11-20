@@ -14,6 +14,8 @@ export function NavLink({ href, label }: NavLinkProps) {
       as="a"
       href={href}
       data-nav-link
+      data-track="nav_click"
+      data-track-target={href.slice(1)}
       className={`${styles.navLink} ${hitArea}`}
       position="relative"
       padding="2 0"

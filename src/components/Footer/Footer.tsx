@@ -1,5 +1,6 @@
 import { profile } from '../../data/cv';
 import { Box } from '../../ui';
+import { hitArea, underlined } from '../../styles/a11y.css';
 import { vars } from '../../styles/theme.css';
 
 interface FooterProps {
@@ -23,6 +24,21 @@ export function Footer({ year }: FooterProps) {
         © {year} {profile.name}
       </p>
       <p>{profile.location}</p>
+      <Box
+        as="button"
+        type="button"
+        data-consent-open
+        hidden
+        className={`${hitArea} ${underlined}`}
+        padding="0"
+        border={0}
+        background="none"
+        color={{ default: 'inherit', hover: vars.color.textStrong }}
+        fontSize="inherit"
+        cursor="pointer"
+      >
+        Cookie settings
+      </Box>
     </Box>
   );
 }

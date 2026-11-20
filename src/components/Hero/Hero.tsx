@@ -76,8 +76,12 @@ export function Hero({ photo }: HeroProps) {
           gap="3"
           marginTop="clamp(28px, 4vw, 48px)"
         >
-          <Button href="#experience">View experience</Button>{' '}
-          <Button href="#contact">Get in touch</Button>
+          <Button href="#experience" data-track="nav_click" data-track-target="experience">
+            View experience
+          </Button>{' '}
+          <Button href="#contact" data-track="nav_click" data-track-target="contact">
+            Get in touch
+          </Button>
         </Box>
       </Box>
 

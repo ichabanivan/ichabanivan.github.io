@@ -1,6 +1,6 @@
 import { keyframes, style, styleVariants } from '@vanilla-extract/css';
 import { vars } from '../../styles/theme.css';
-import { finePointer, media, motionOk } from '../../styles/media';
+import { finePointer, motionOk } from '../../styles/media';
 
 const clip = (top: string, bottom: string) => `polygon(
   calc((var(--l) + var(--k) * (50 - var(${top})) / 100) * 1%) calc(var(${top}) * 1%),
@@ -53,10 +53,3 @@ export const item = styleVariants(ITEMS, ({ delay, name }) => ({
     [motionOk]: { animation: `${name} 0.9s ${vars.ease} ${delay}s backwards` },
   },
 }));
-
-export const contactLink = style({
-  textDecoration: 'underline',
-  textDecorationThickness: 'from-font',
-  textUnderlineOffset: '0.25em',
-  '@media': { [media.print]: { textDecoration: 'none' } },
-});

@@ -12,6 +12,7 @@ import { AdditionalInformation } from '../components/AdditionalInformation';
 import { Contact } from '../components/Contact';
 import { Footer } from '../components/Footer';
 import { Lightbox } from '../components/Lightbox';
+import { ConsentBanner } from '../components/ConsentBanner';
 import { getDocumentImages, logos } from '../lib/documents';
 import portrait from '../assets/portrait.jpg';
 import { profile, currentEmployer, currentPosition } from '../data/cv';
@@ -43,7 +44,14 @@ const description = `${profile.name} is a ${currentPosition.title} at ${currentE
 
 <Base title={title} description={description}>
   <div class={skipLink}>
-    <Button variant="primary" size="small" href="#experience">
+    <Button
+      variant="primary"
+      size="small"
+      href="#experience"
+      data-track="nav_click"
+      data-track-target="experience"
+      data-track-placement="skip_link"
+    >
       Skip to experience
     </Button>
   </div>
@@ -60,4 +68,5 @@ const description = `${profile.name} is a ${currentPosition.title} at ${currentE
   </main>
   <Footer year={new Date().getFullYear()} />
   <Lightbox />
+  <ConsentBanner />
 </Base>
