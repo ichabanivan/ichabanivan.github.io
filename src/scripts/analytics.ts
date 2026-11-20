@@ -1,3 +1,4 @@
+import { onCLS, onINP, onLCP } from 'web-vitals';
 import {
   analyticsAvailable,
   analyticsDebug,
@@ -77,8 +78,7 @@ function trackErrors() {
   });
 }
 
-async function trackWebVitals() {
-  const { onCLS, onINP, onLCP } = await import('web-vitals');
+function trackWebVitals() {
   const report = (metric: { name: string; value: number; rating: string }) =>
     trackEvent('web_vital', {
       metric_name: metric.name,
@@ -95,6 +95,6 @@ export function initAnalytics() {
   trackClicks();
   trackSectionViews();
   trackErrors();
-  void trackWebVitals();
+  trackWebVitals();
   window.addEventListener('beforeprint', () => trackEvent('cv_print', {}));
 }

@@ -20,6 +20,7 @@ declare global {
     gtag?: (...args: unknown[]) => void;
     grantAnalyticsConsent?: () => void;
     denyAnalyticsConsent?: () => void;
+    analyticsConsentPending?: boolean;
   }
 }
 
