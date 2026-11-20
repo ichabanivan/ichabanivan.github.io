@@ -30,6 +30,7 @@ const LAYOUT_PROPS = [
   'gridTemplateColumns',
   'gridColumn',
   'gridRow',
+  'scrollMarginTop',
 ] as const;
 
 export const SPACE_PROPS = [

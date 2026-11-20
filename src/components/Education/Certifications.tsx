@@ -3,6 +3,7 @@ import type { DocumentImages } from '../../lib/documents';
 import { Box, Text } from '../../ui';
 import { vars } from '../../styles/theme.css';
 import { CertificateCard } from './CertificateCard';
+import { HEADING_CLEARANCE } from '../Section';
 
 const certificateKey = (certificate: Certification) =>
   `${certificate.title}|${certificate.issuer}|${certificate.year ?? ''}`;
@@ -13,7 +14,12 @@ interface CertificationsProps {
 
 export function Certifications({ documents }: CertificationsProps) {
   return (
-    <Box as="section" id="certifications" aria-labelledby="certifications-title">
+    <Box
+      as="section"
+      id="certifications"
+      aria-labelledby="certifications-title"
+      scrollMarginTop={{ default: HEADING_CLEARANCE, print: '0' }}
+    >
       <Text
         as="h2"
         variant="display"

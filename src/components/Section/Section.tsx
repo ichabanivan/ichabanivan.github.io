@@ -2,6 +2,9 @@ import type { ReactNode } from 'react';
 import { Box, Container, Text, type StyleProps } from '../../ui';
 import { vars } from '../../styles/theme.css';
 
+export const HEADING_CLEARANCE = '24px';
+const scrollMarginTop = `calc(${HEADING_CLEARANCE} - ${vars.space.section})`;
+
 export type SectionProps = StyleProps & {
   id: string;
   navTarget?: string;
@@ -29,6 +32,7 @@ export function Section({
       data-section={navTarget ?? id}
       className={className}
       paddingBlock={vars.space.section}
+      scrollMarginTop={{ default: scrollMarginTop, print: '0' }}
       {...style}
     >
       <Container>
