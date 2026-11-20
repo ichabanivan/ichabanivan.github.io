@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { media } from './media';
 import { vars } from './theme.css';
 
 export const hitArea = style({
@@ -44,4 +45,11 @@ export const skipLink = style({
       whiteSpace: 'nowrap',
     },
   },
+});
+
+export const underlined = style({
+  textDecoration: 'underline',
+  textDecorationThickness: 'from-font',
+  textUnderlineOffset: '0.25em',
+  '@media': { [media.print]: { textDecoration: 'none' } },
 });

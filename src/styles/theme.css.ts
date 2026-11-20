@@ -82,6 +82,7 @@ export const vars = createGlobalTheme(':root', {
     headerH: '64px',
   },
   layer: {
+    banner: '40',
     header: '50',
     skipLink: '60',
   },

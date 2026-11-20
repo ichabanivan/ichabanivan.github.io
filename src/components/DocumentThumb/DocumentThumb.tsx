@@ -17,6 +17,8 @@ export function DocumentThumb({ image, caption, verify, ...style }: DocumentThum
       target="_blank"
       rel="noopener"
       data-lightbox
+      data-track="certificate_open"
+      data-track-document={caption}
       data-caption={caption}
       data-verify={verify}
       data-width={image.width}

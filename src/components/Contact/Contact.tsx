@@ -25,6 +25,8 @@ export function Contact({ cvHref }: ContactProps) {
       <Box
         as="a"
         href={`mailto:${profile.email}`}
+        data-track="contact_click"
+        data-track-method="email"
         data-reveal
         display="inline-block"
         maxWidth="100%"
@@ -49,16 +51,34 @@ export function Contact({ cvHref }: ContactProps) {
         gap="3"
         marginTop="clamp(28px, 4vw, 48px)"
       >
-        <Button href={profile.linkedin} target="_blank" rel="me noopener noreferrer">
+        <Button
+          href={profile.linkedin}
+          target="_blank"
+          rel="me noopener noreferrer"
+          data-track="social_click"
+          data-track-network="linkedin"
+        >
           LinkedIn
         </Button>{' '}
-        <Button href={profile.github} target="_blank" rel="me noopener noreferrer">
+        <Button
+          href={profile.github}
+          target="_blank"
+          rel="me noopener noreferrer"
+          data-track="social_click"
+          data-track-network="github"
+        >
           GitHub
         </Button>{' '}
-        <Button href={profile.telegram} target="_blank" rel="me noopener noreferrer">
+        <Button
+          href={profile.telegram}
+          target="_blank"
+          rel="me noopener noreferrer"
+          data-track="social_click"
+          data-track-network="telegram"
+        >
           Telegram
         </Button>{' '}
-        <Button variant="primary" href={cvHref} download icon="↓">
+        <Button variant="primary" href={cvHref} download icon="↓" data-track="cv_download">
           Download CV
         </Button>
       </Box>

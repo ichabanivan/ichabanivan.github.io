@@ -33,18 +33,76 @@ const jsonLd = buildJsonLd({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {analyticsEnabled && (
-      <>
-        <script is:inline async src={googleTagUrl} data-analytics />
-        <script is:inline>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          gtag('js', new Date());
-        </script>
-      </>
-    )}
+    {analyticsEnabled && <script is:inline define:vars={{ googleTagUrl }}>
+      (function () {
+        var EXCLUDE_KEY = 'analytics_exclude';
+        var CONSENT_KEY = 'analytics_consent';
+        var storage = {
+          read: function (key) {
+            try {
+              return localStorage.getItem(key);
+            } catch (error) {
+              return null;
+            }
+          },
+          write: function (key, value) {
+            try {
+              if (value === null) localStorage.removeItem(key);
+              else localStorage.setItem(key, value);
+            } catch (error) {
+              return;
+            }
+          },
+        };
+
+        var requestedExclusion = new URLSearchParams(location.search).get(EXCLUDE_KEY);
+        if (requestedExclusion !== null)
+          storage.write(EXCLUDE_KEY, requestedExclusion === '0' ? null : '1');
+        if (storage.read(EXCLUDE_KEY)) return;
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+
+        var setAnalyticsStorage = function (state) {
+          storage.write(CONSENT_KEY, state);
+          window.gtag('consent', 'update', { analytics_storage: state });
+        };
+        window.grantAnalyticsConsent = function () {
+          setAnalyticsStorage('granted');
+        };
+        var removeAnalyticsCookies = function () {
+          document.cookie.split(';').forEach(function (pair) {
+            var name = pair.split('=')[0].trim();
+            if (name.indexOf('_ga') !== 0) return;
+            var expired = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            document.cookie = expired;
+            document.cookie = expired + '; domain=' + location.hostname;
+          });
+        };
+        window.denyAnalyticsConsent = function () {
+          setAnalyticsStorage('denied');
+          removeAnalyticsCookies();
+        };
+
+        window.gtag('consent', 'default', {
+          analytics_storage: 'denied',
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+        });
+        if (storage.read(CONSENT_KEY) === 'granted')
+          window.gtag('consent', 'update', { analytics_storage: 'granted' });
+        window.gtag('js', new Date());
+
+        var tag = document.createElement('script');
+        tag.async = true;
+        tag.src = googleTagUrl;
+        tag.setAttribute('data-analytics', '');
+        document.head.appendChild(tag);
+      })();
+    </script>}
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
@@ -88,16 +146,20 @@ const jsonLd = buildJsonLd({
       (function () {
         var root = document.documentElement;
         root.classList.add('js');
-        function bail() {
-          if (!window.__motionReady) root.classList.remove('js');
+        function bail(reason) {
+          if (window.__motionReady || !root.classList.contains('js')) return;
+          root.classList.remove('js');
+          if (window.gtag) window.gtag('event', 'motion_fallback', { reason: reason });
         }
-        setTimeout(bail, 4000);
+        setTimeout(function () {
+          bail('timeout');
+        }, 4000);
         addEventListener(
           'error',
           function (e) {
             var failed = e.target;
             if (failed && failed.tagName === 'SCRIPT' && !failed.hasAttribute('data-analytics'))
-              bail();
+              bail('script_error');
           },
           true,
         );

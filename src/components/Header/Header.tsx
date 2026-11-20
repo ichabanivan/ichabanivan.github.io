@@ -85,7 +85,14 @@ export function Header({ cvHref }: HeaderProps) {
               </li>
             ))}
           </Box>
-          <Button variant="primary" size="small" href={cvHref} download icon="↓">
+          <Button
+            variant="primary"
+            size="small"
+            href={cvHref}
+            download
+            icon="↓"
+            data-track="cv_download"
+          >
             Download CV
           </Button>
         </Box>

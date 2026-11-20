@@ -6,6 +6,7 @@ import { initHeroStrips } from './hero-strips';
 import { initMagnetic } from './magnetic';
 import { initLightbox } from './lightbox';
 import { initAnalytics } from './analytics';
+import { initConsent } from './consent';
 
 declare global {
   interface Window {
@@ -22,4 +23,5 @@ initHeroStrips();
 initMagnetic();
 initLightbox();
 initAnalytics();
+initConsent();
 document.fonts?.ready.then(() => ScrollTrigger.refresh());

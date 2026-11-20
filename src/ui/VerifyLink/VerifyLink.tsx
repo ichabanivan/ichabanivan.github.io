@@ -19,6 +19,8 @@ export function VerifyLink({ href, credentialName, ...props }: VerifyLinkProps) 
       target="_blank"
       rel="noopener"
       aria-describedby={NEW_TAB_HINT_ID}
+      data-track="certificate_verify"
+      data-track-document={credentialName}
       display={{ default: 'inline-flex', print: 'inline' }}
       alignItems="center"
       gap="2"
