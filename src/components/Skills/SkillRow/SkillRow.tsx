@@ -35,7 +35,7 @@ export function SkillRow({ skill }: SkillRowProps) {
       <Box
         as="ul"
         display={{ print: 'inline' }}
-        fontSize={{ default: 17, print: 'inherit' }}
+        fontSize={{ default: 16, print: 'inherit' }}
         lineHeight={{ default: 1.8, print: 'inherit' }}
         color={vars.color.text}
       >
@@ -43,7 +43,7 @@ export function SkillRow({ skill }: SkillRowProps) {
           <Fragment key={item}>
             {i > 0 && ' '}
             <li className={styles.item}>
-              <span className={styles.label}>{item}</span>
+              {item}
               {i < lastIndex && <span className={styles.comma}>,</span>}
             </li>
           </Fragment>

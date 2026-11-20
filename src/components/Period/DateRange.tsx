@@ -9,7 +9,7 @@ interface DateRangeProps {
 export function DateRange({ start, end }: DateRangeProps) {
   return (
     <>
-      <Time date={start} /> - <Time date={end} />
+      <Time date={start} /> – <Time date={end} />
     </>
   );
 }

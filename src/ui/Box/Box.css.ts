@@ -1,5 +1,5 @@
 import { createVar, style, type StyleRule } from '@vanilla-extract/css';
-import { media } from '../../styles/media';
+import { hoverCapable, media } from '../../styles/media';
 
 const LAYOUT_PROPS = [
   'display',
@@ -118,15 +118,20 @@ export interface Atom {
   variable: string;
 }
 
-const SELECTORS: Partial<Record<Condition, string>> = {
-  hover: '&:hover, &:focus-visible',
-  groupHover: '[data-group]:hover &, [data-group]:focus-visible &',
+const SELECTORS: Partial<Record<Condition, { hovered: string; focused: string }>> = {
+  hover: { hovered: '&:hover', focused: '&:focus-visible' },
+  groupHover: { hovered: '[data-group]:hover &', focused: '[data-group]:focus-visible &' },
 };
 
 function wrap(condition: Condition, rule: StyleRule): StyleRule {
   if (condition === 'default') return rule;
   const selector = SELECTORS[condition];
-  if (selector) return { selectors: { [selector]: rule } } as StyleRule;
+  if (selector) {
+    return {
+      selectors: { [selector.focused]: rule },
+      '@media': { [hoverCapable]: { selectors: { [selector.hovered]: rule } } },
+    } as StyleRule;
+  }
   return { '@media': { [media[condition as keyof typeof media]]: rule } };
 }
 

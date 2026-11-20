@@ -23,8 +23,8 @@ export function VerifyLink({ href, credentialName, ...props }: VerifyLinkProps) 
       alignItems="center"
       gap="2"
       fontWeight={{ default: 500, print: 400 }}
-      color={{ default: vars.color.muted, hover: vars.color.white }}
-      transition="color 0.3s"
+      color={{ default: vars.color.muted, hover: vars.color.textStrong }}
+      transition={`color ${vars.duration.base} ${vars.ease}`}
       {...props}
     >
       <ScreenOnly>
@@ -41,7 +41,7 @@ export function VerifyLink({ href, credentialName, ...props }: VerifyLinkProps) 
         display={{ print: 'none' }}
         color={vars.color.accentText}
         transform={{ default: 'none', groupHover: 'translate(2px, -2px)' }}
-        transition={`transform 0.4s ${vars.ease}`}
+        transition={`transform ${vars.duration.base} ${vars.ease}`}
       >
         ↗
       </Box>

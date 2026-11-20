@@ -37,7 +37,7 @@ export function Button({
       borderColor={primary ? vars.color.accent : vars.color.line}
       borderRadius={999}
       background={primary ? vars.color.accent : undefined}
-      color={primary ? vars.color.white : undefined}
+      color={primary ? vars.color.onAccent : undefined}
       fontSize={small ? 14 : 15}
       fontWeight={600}
       letterSpacing="0.01em"

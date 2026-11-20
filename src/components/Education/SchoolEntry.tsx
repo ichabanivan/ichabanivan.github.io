@@ -37,7 +37,7 @@ export function SchoolEntry({ school, diploma, isLast }: SchoolEntryProps) {
           fontSize={{ default: 'clamp(19px, 2vw, 24px)', print: '10.5pt' }}
           fontWeight={600}
           lineHeight={1.3}
-          color={vars.color.white}
+          color={vars.color.textStrong}
         >
           {school.school}
         </Text>

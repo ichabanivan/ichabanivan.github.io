@@ -71,6 +71,7 @@ export function Header({ cvHref }: HeaderProps) {
           gap={{ default: '8', lg: NAV_GAP }}
           padding={{ default: `8 ${vars.space.gutter}`, lg: '0' }}
           background={{ default: vars.color.bg, lg: 'none' }}
+          overflow={{ default: 'auto', lg: 'visible' }}
         >
           <Box
             as="ul"

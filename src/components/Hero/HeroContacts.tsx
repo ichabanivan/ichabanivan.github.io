@@ -11,7 +11,7 @@ export function HeroContacts() {
       className={styles.item[1]}
       display="flex"
       flexWrap="wrap"
-      gap={{ default: '1 5', print: '0 3' }}
+      gap={{ default: '5', print: '0 3' }}
       marginTop={{ default: '4', print: '1' }}
       fontSize={{ default: 15, print: 'inherit' }}
       color={vars.color.muted}

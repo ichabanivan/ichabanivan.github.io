@@ -55,7 +55,7 @@ export const profile = {
   telegram: 'https://t.me/ichabanivan',
   stack: ['React', 'TypeScript', 'Node.js', 'NestJS', 'Next.js'],
   address: { locality: 'Poznań', countryCode: 'PL' },
-  contactNote: 'The fastest way to reach me is email.',
+  contactNote: 'The fastest way to reach me is email',
   summary: [
     'Senior Software Engineer building web products since 2016, currently at Fiverr. I work across the stack with React, TypeScript, Node.js, NestJS and Next.js, with a focus on scalable front-end architecture, design systems and measurable product impact.',
     'I have led front-end teams, run interviews and code reviews, mentored engineers, and shipped everything from micro-frontends and SSR applications to React Native and Flutter apps.',
@@ -85,10 +85,10 @@ export const skills: SkillGroup[] = [
   {
     group: 'Frameworks & Runtimes',
     items: [
-      'ReactJS',
-      'NextJS (SSR/CSR)',
+      'React',
+      'Next.js (SSR/CSR)',
       'React Native',
-      'NodeJS',
+      'Node.js',
       'NestJS',
       'Angular 2+',
       'Astro',
@@ -103,10 +103,10 @@ export const skills: SkillGroup[] = [
       'React Query',
       'Redux',
       'Redux Toolkit',
-      'Redux Saga',
+      'Redux-Saga',
       'React DnD',
       'Reactstrap',
-      'Antd',
+      'Ant Design',
       'MUI',
       'Apollo',
       'Formik',
@@ -189,7 +189,7 @@ export const skills: SkillGroup[] = [
     printHidden: true,
   },
   { group: 'Other DevOps & Infrastructure Tools', items: ['Consul'], printHidden: true },
-  { group: 'Operating Systems', items: ['Mac OS', 'Windows', 'Linux'], printHidden: true },
+  { group: 'Operating Systems', items: ['macOS', 'Windows', 'Linux'], printHidden: true },
 ];
 
 export const experience: Employer[] = [
@@ -519,7 +519,7 @@ export interface Volunteering {
 
 export const volunteering: Volunteering[] = [
   {
-    organization: 'A-Level Ukraine',
+    organization: 'A-level Ukraine',
     role: 'Mentoring “Programming for Children”',
     start: { label: 'June 2017', iso: '2017-06' },
     end: { label: 'September 2017', iso: '2017-09' },

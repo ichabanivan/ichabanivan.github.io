@@ -8,7 +8,7 @@ interface StrongProps {
 
 export function Strong({ children }: StrongProps) {
   return (
-    <Box as="strong" color={vars.color.text} fontWeight={600}>
+    <Box as="strong" color={vars.color.text} fontWeight={{ default: 500, print: 600 }}>
       {children}
     </Box>
   );

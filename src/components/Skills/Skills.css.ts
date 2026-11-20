@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/theme.css';
-import { finePointer, media } from '../../styles/media';
+import { media } from '../../styles/media';
 
 export const backdrop = style({
   position: 'absolute',
@@ -17,7 +17,7 @@ export const item = style({
     '&:not(:last-child)::after': {
       content: "'/'",
       marginLeft: '0.35em',
-      color: vars.color.outline,
+      color: vars.color.ghost,
     },
   },
   '@media': {
@@ -31,18 +31,4 @@ export const comma = style({
   overflow: 'hidden',
   verticalAlign: 'bottom',
   '@media': { [media.print]: { display: 'inline', width: 'auto', overflow: 'visible' } },
-});
-
-export const label = style({
-  backgroundImage: `linear-gradient(${vars.color.accent}, ${vars.color.accent})`,
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: '0 100%',
-  backgroundSize: '0% 1px',
-  '@media': {
-    [finePointer]: {
-      transition: `background-size 0.5s ${vars.ease}, color 0.3s`,
-      selectors: { '&:hover': { backgroundSize: '100% 1px', color: vars.color.white } },
-    },
-    [media.print]: { backgroundImage: 'none' },
-  },
 });

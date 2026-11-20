@@ -61,7 +61,7 @@ export function PositionBlock({ position, logos, isGrouped, isFirst }: PositionB
           </span>
         </Text>
       )}
-      <Text display={{ print: 'none' }} marginTop="4" color={vars.color.muted}>
+      <Text display={{ print: 'none' }} maxWidth="54ch" marginTop="4" color={vars.color.muted}>
         {position.summary}
       </Text>
       <ListHeading>Highlights</ListHeading>

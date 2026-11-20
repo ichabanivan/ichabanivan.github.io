@@ -15,7 +15,7 @@ export function ExperienceStat() {
         fontFamily={vars.font.display}
         fontSize="clamp(64px, 6vw, 88px)"
         lineHeight={0.85}
-        color={vars.color.white}
+        color={vars.color.textStrong}
         title={`Since ${careerStart.label}`}
       >
         <span data-years-since={careerStart.iso}>{yearsSince(careerStart.iso)}</span>

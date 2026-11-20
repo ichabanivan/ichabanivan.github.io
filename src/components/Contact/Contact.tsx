@@ -36,9 +36,9 @@ export function Contact({ cvHref }: ContactProps) {
         letterSpacing="0.02em"
         textTransform={{ default: 'uppercase', print: 'none' }}
         overflowWrap="anywhere"
-        color={{ default: vars.color.white, hover: vars.color.accentText }}
+        color={{ default: vars.color.textStrong, hover: vars.color.accentText }}
         background={{ default: underline('3px'), print: 'none' }}
-        transition="color 0.3s"
+        transition={`color ${vars.duration.base} ${vars.ease}`}
       >
         {profile.email}
       </Box>

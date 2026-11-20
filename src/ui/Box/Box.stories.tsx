@@ -56,7 +56,7 @@ export const HoverState: Story = {
       border="1px solid"
       borderColor={{ default: vars.color.line, hover: vars.color.accent }}
       borderRadius={8}
-      color={{ default: vars.color.text, hover: vars.color.white }}
+      color={{ default: vars.color.text, hover: vars.color.textStrong }}
       transition="border-color 0.3s, color 0.3s"
     >
       Hover or focus me

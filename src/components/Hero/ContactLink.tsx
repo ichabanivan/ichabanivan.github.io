@@ -2,6 +2,7 @@ import { Box, type BoxProps } from '../../ui';
 import { hitArea } from '../../styles/a11y.css';
 import { NEW_TAB_HINT_ID } from '../../styles/hints';
 import { vars } from '../../styles/theme.css';
+import * as styles from './Hero.css';
 
 type ContactLinkProps = BoxProps<'a'>;
 
@@ -11,8 +12,8 @@ export function ContactLink(props: ContactLinkProps) {
   return (
     <Box
       as="a"
-      className={hitArea}
-      color={{ hover: vars.color.white }}
+      className={`${hitArea} ${styles.contactLink}`}
+      color={{ hover: vars.color.textStrong }}
       aria-describedby={describedBy}
       {...props}
     />

@@ -47,6 +47,8 @@ const UNITLESS = new Set<string>([
 
 const SPACE = new Set<string>(SPACE_PROPS);
 
+const ROOT_FONT_SIZE = 16;
+
 const isStyleProp = (key: string): key is StyleProp => key in atoms.default;
 
 const isCondition = (key: string): key is Condition =>
@@ -54,6 +56,7 @@ const isCondition = (key: string): key is Condition =>
 
 function toCssValue(prop: StyleProp, value: Value): string {
   if (SPACE.has(prop)) return resolveSpace(prop, value);
+  if (prop === 'fontSize' && typeof value === 'number') return `${value / ROOT_FONT_SIZE}rem`;
   if (typeof value === 'number' && !UNITLESS.has(prop)) return `${value}px`;
   return String(value);
 }

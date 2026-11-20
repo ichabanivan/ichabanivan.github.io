@@ -44,8 +44,8 @@ export function Section({
             as="span"
             aria-hidden
             fontSize={14}
-            fontWeight={600}
-            letterSpacing="0.12em"
+            fontWeight={500}
+            letterSpacing="0.08em"
             color={vars.color.accentText}
             display={{ print: 'none' }}
           >

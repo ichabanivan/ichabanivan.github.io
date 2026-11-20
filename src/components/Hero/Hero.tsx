@@ -64,7 +64,7 @@ export function Hero({ photo }: HeroProps) {
           fontWeight={300}
           letterSpacing={{ default: '0.16em', lg: '0.22em', print: '0.05em' }}
           textTransform="uppercase"
-          color={vars.color.white}
+          color={vars.color.textStrong}
         >
           {profile.title}
         </Text>
@@ -76,9 +76,7 @@ export function Hero({ photo }: HeroProps) {
           gap="3"
           marginTop="clamp(28px, 4vw, 48px)"
         >
-          <Button variant="primary" href="#experience">
-            View experience
-          </Button>{' '}
+          <Button href="#experience">View experience</Button>{' '}
           <Button href="#contact">Get in touch</Button>
         </Box>
       </Box>

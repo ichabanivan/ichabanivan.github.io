@@ -23,8 +23,8 @@ export function Period({ start, end, location, showDuration, ...style }: PeriodP
     >
       <Text
         fontSize={{ default: 14, print: 'inherit' }}
-        fontWeight={600}
-        letterSpacing={{ default: '0.06em', print: 0 }}
+        fontWeight={500}
+        letterSpacing={{ default: '0.08em', print: 0 }}
         textTransform={{ default: 'uppercase', print: 'none' }}
         color={vars.color.accentText}
       >
@@ -33,7 +33,7 @@ export function Period({ start, end, location, showDuration, ...style }: PeriodP
       {showDuration && (
         <Text
           fontSize={{ default: 14, print: 'inherit' }}
-          fontWeight={{ default: 600, print: 400 }}
+          fontWeight={{ default: 500, print: 400 }}
           color={vars.color.text}
           data-tenure-start={start.iso}
           data-tenure-end={end.iso}

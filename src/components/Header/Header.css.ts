@@ -13,10 +13,10 @@ export const headerBar = style({
       backdropFilter: 'blur(14px)',
       WebkitBackdropFilter: 'blur(14px)',
       opacity: 0,
-      transition: 'opacity 0.4s',
+      transition: `opacity ${vars.duration.base} ${vars.ease}`,
     },
     '&.is-scrolled::before, &.is-open::before': { opacity: 1 },
-    '&.is-on-light::before': { background: vars.color.scrim },
+    '&.is-on-light::before': { background: vars.color.glassStrong },
   },
 });
 
@@ -24,7 +24,7 @@ export const navMenu = style({
   opacity: 0,
   visibility: 'hidden',
   transform: 'translateY(-12px)',
-  transition: `opacity 0.3s, transform 0.4s ${vars.ease}, visibility 0.3s`,
+  transition: `opacity ${vars.duration.base} ${vars.ease}, transform ${vars.duration.base} ${vars.ease}, visibility ${vars.duration.base}`,
   selectors: { '.is-open &': { opacity: 1, visibility: 'visible', transform: 'none' } },
   '@media': {
     [media.lg]: { opacity: 1, visibility: 'visible', transform: 'none', transition: 'none' },
@@ -35,19 +35,17 @@ export const navLink = style({
   selectors: {
     '&::after': {
       content: "''",
-      display: 'none',
       position: 'absolute',
       inset: 'auto 0 2px 0',
       height: 2,
       background: vars.color.accent,
       transform: 'scaleX(0)',
       transformOrigin: 'left',
-      transition: `transform 0.4s ${vars.ease}`,
+      transition: `transform ${vars.duration.base} ${vars.ease}`,
     },
-    "&[aria-current='location']": { color: vars.color.white },
+    "&[aria-current='location']": { color: vars.color.textStrong },
     "&[aria-current='location']::after": { transform: 'scaleX(1)' },
   },
-  '@media': { [media.lg]: { selectors: { '&::after': { display: 'block' } } } },
 });
 
 export const menuBar = style({

@@ -18,9 +18,9 @@ globalStyle('body', {
   background: vars.color.bg,
   color: vars.color.text,
   fontFamily: vars.font.body,
-  fontSize: 16,
   lineHeight: 1.65,
   WebkitFontSmoothing: 'antialiased',
+  MozOsxFontSmoothing: 'grayscale',
   overflowX: 'clip',
 });
 
@@ -37,7 +37,7 @@ globalStyle(':focus-visible', {
   borderRadius: 4,
 });
 
-globalStyle('::selection', { background: vars.color.accent, color: vars.color.white });
+globalStyle('::selection', { background: vars.color.accent, color: vars.color.onAccent });
 
 globalStyle('main:focus', { outline: 'none' });
 
@@ -63,7 +63,7 @@ globalStyle('*, *::before, *::after', {
 globalStyle('html, body', {
   '@media': {
     [print]: {
-      background: vars.color.white,
+      background: vars.color.bg,
       color: vars.color.text,
       fontSize: '9pt',
       lineHeight: 1.3,

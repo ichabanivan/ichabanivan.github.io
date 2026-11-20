@@ -37,7 +37,7 @@ export function MenuToggle({ controls }: MenuToggleProps) {
           height={2}
           margin="2 auto"
           background="currentColor"
-          transition={`transform 0.35s ${vars.ease}`}
+          transition={`transform ${vars.duration.base} ${vars.ease}`}
         />
       ))}
     </Box>

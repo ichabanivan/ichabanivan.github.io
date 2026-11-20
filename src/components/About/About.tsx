@@ -30,7 +30,7 @@ export function About() {
               data-reveal
               key={paragraph}
               fontWeight={{ default: 300, print: 400 }}
-              color={i === 0 ? vars.color.white : vars.color.muted}
+              color={i === 0 ? vars.color.textStrong : vars.color.muted}
               marginTop={i === 0 ? undefined : { print: '1' }}
             >
               {paragraph}
@@ -44,7 +44,7 @@ export function About() {
               <Text as="dt" variant="eyebrow" color={vars.color.muted}>
                 {fact.term}
               </Text>
-              <Box as="dd" marginTop="1" fontSize={17} color={vars.color.white}>
+              <Box as="dd" marginTop="1" fontSize={16} color={vars.color.textStrong}>
                 {fact.value}
               </Box>
             </Box>

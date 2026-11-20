@@ -13,4 +13,4 @@ export const marqueeWord = style({
   },
 });
 
-globalStyle(`[data-marquee-track]`, { WebkitTextStroke: `1px ${vars.color.outline}` });
+globalStyle(`[data-marquee-track]`, { WebkitTextStroke: `1px ${vars.color.ghost}` });

@@ -17,6 +17,7 @@ export function BulletList({ items }: BulletListProps) {
       as="ul"
       display="grid"
       gap={{ default: '3', print: '0' }}
+      maxWidth={{ default: '56ch', print: 'none' }}
       marginTop={{ default: '3', print: '1' }}
     >
       {items.map((item) => (

@@ -15,6 +15,8 @@ import { Lightbox } from '../components/Lightbox';
 import { getDocumentImages, logos } from '../lib/documents';
 import portrait from '../assets/portrait.jpg';
 import { profile, currentEmployer, currentPosition } from '../data/cv';
+import { skipLink } from '../styles/a11y.css';
+import { Button } from '../ui';
 
 const cvHref = profile.cvPdf;
 
@@ -40,6 +42,11 @@ const description = `${profile.name} is a ${currentPosition.title} at ${currentE
 ---
 
 <Base title={title} description={description}>
+  <div class={skipLink}>
+    <Button variant="primary" size="small" href="#experience">
+      Skip to experience
+    </Button>
+  </div>
   <Header cvHref={cvHref} />
   <main id="main" tabindex="-1">
     <Hero photo={photo} />

@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { vars } from './theme.css';
 
 export const hitArea = style({
   position: 'relative',
@@ -27,4 +28,20 @@ export const srOnly = style({
   clipPath: 'inset(50%)',
   whiteSpace: 'nowrap',
   border: 0,
+});
+
+export const skipLink = style({
+  position: 'fixed',
+  top: `calc(${vars.space.headerH} + 8px)`,
+  left: vars.space.gutter,
+  zIndex: vars.layer.skipLink,
+  selectors: {
+    '&:not(:focus-within)': {
+      width: 1,
+      height: 1,
+      overflow: 'hidden',
+      clipPath: 'inset(50%)',
+      whiteSpace: 'nowrap',
+    },
+  },
 });

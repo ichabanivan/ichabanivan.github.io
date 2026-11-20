@@ -58,16 +58,18 @@ export const vars = createGlobalTheme(':root', {
     line: 'rgba(255, 255, 255, 0.1)',
     text: '#ececee',
     muted: '#a1a1aa',
-    white: '#fff',
+    textStrong: '#fff',
+    onAccent: '#fff',
     paper: '#fff',
     accent: '#cd0d2e',
     accentLine: 'rgba(205, 13, 46, 0.6)',
     accentText: '#ff4d67',
     accentFaint: 'rgba(205, 13, 46, 0.15)',
     glass: 'rgba(11, 11, 12, 0.78)',
+    glassStrong: 'rgba(8, 8, 9, 0.94)',
     scrim: 'rgba(8, 8, 9, 0.94)',
     control: 'rgba(20, 20, 22, 0.9)',
-    outline: 'rgba(255, 255, 255, 0.36)',
+    ghost: 'rgba(255, 255, 255, 0.36)',
   },
   font: {
     display: `'${bebas}', 'Arial Narrow', Impact, sans-serif`,
@@ -81,8 +83,14 @@ export const vars = createGlobalTheme(':root', {
   },
   layer: {
     header: '50',
+    skipLink: '60',
   },
   radius: '14px',
+  duration: {
+    fast: '0.2s',
+    base: '0.4s',
+    slow: '0.9s',
+  },
   ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
   easeExpo: 'cubic-bezier(0.16, 1, 0.3, 1)',
 });
@@ -115,14 +123,12 @@ export const lightTheme = style({
         [vars.color.line]: 'rgba(11, 11, 12, 0.12)',
         [vars.color.text]: '#1c1c1f',
         [vars.color.muted]: '#5f5f66',
-        [vars.color.white]: BG,
+        [vars.color.textStrong]: BG,
         [vars.color.accentLine]: 'rgba(205, 13, 46, 0.5)',
         [vars.color.accentText]: '#cd0d2e',
         [vars.color.accentFaint]: 'rgba(205, 13, 46, 0.08)',
-        [vars.color.outline]: 'rgba(11, 11, 12, 0.28)',
+        [vars.color.ghost]: 'rgba(11, 11, 12, 0.28)',
       },
     },
   },
 });
-
-globalStyle(`${lightTheme} ::selection`, { color: '#fff' });

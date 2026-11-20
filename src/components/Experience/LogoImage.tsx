@@ -1,5 +1,6 @@
 import type { Logo } from '../../lib/documents';
 import { Box } from '../../ui';
+import { vars } from '../../styles/theme.css';
 
 const DEFAULT_HEIGHT = 22;
 
@@ -23,7 +24,7 @@ export function LogoImage({ logo, height = DEFAULT_HEIGHT }: LogoImageProps) {
       maxWidth={150}
       objectFit="contain"
       opacity={{ default: 0.75, groupHover: 1 }}
-      transition="opacity 0.4s"
+      transition={`opacity ${vars.duration.base} ${vars.ease}`}
       display={{ print: 'none' }}
     />
   );

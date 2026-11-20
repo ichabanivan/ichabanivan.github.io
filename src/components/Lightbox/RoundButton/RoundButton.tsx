@@ -18,11 +18,11 @@ export function RoundButton(props: RoundButtonProps) {
       borderColor={{ default: vars.color.line, hover: vars.color.accent }}
       borderRadius="50%"
       background={{ default: vars.color.control, hover: vars.color.accent }}
-      color={vars.color.white}
+      color={vars.color.onAccent}
       fontSize={26}
       lineHeight={1}
       cursor="pointer"
-      transition="background-color 0.3s, border-color 0.3s"
+      transition={`background-color ${vars.duration.base} ${vars.ease}, border-color ${vars.duration.base} ${vars.ease}`}
       {...props}
     />
   );

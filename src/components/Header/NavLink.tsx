@@ -22,9 +22,9 @@ export function NavLink({ href, label }: NavLinkProps) {
       color={{
         default: vars.color.text,
         lg: vars.color.muted,
-        hover: vars.color.white,
+        hover: vars.color.textStrong,
       }}
-      transition="color 0.3s"
+      transition={`color ${vars.duration.base} ${vars.ease}`}
       fontFamily={{ default: vars.font.display, lg: vars.font.body }}
       lineHeight={{ default: 1.15, lg: 'inherit' }}
       letterSpacing={{ default: '0.03em', lg: 'normal' }}

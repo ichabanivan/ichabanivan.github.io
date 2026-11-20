@@ -4,10 +4,15 @@ import { Box, Card, PrintOnly, Text, VerifyLink, type StyleProps } from '../../u
 import { vars } from '../../styles/theme.css';
 import { DocumentThumb } from '../DocumentThumb';
 
-const PRINT_INLINE = {
+const TITLE_STYLE = {
   display: { print: 'inline' },
-  fontSize: { print: 'inherit' },
-  fontWeight: { print: 400 },
+  fontSize: { default: 16, print: 'inherit' },
+  fontWeight: { default: 600, print: 400 },
+} satisfies StyleProps;
+
+const META_STYLE = {
+  display: { print: 'inline' },
+  fontSize: { default: 14, print: 'inherit' },
 } satisfies StyleProps;
 
 const certificateMeta = (certificate: Certification) =>
@@ -44,11 +49,11 @@ export function CertificateCard({ certificate, image }: CertificateCardProps) {
         gap="1"
         padding={{ default: '1', print: '0' }}
       >
-        <Text as="h3" variant="title" {...PRINT_INLINE}>
+        <Text as="h3" variant="title" {...TITLE_STYLE}>
           {certificate.title}
           <PrintOnly>, </PrintOnly>
         </Text>
-        <Text variant="meta" {...PRINT_INLINE}>
+        <Text variant="meta" {...META_STYLE}>
           {certificate.issuer}
           {certificate.year && (
             <>

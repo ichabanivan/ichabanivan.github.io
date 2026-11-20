@@ -9,14 +9,14 @@ const sheen = (alpha: number) =>
 const spot = (alpha: number) =>
   `radial-gradient(circle 70px at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, ${alpha}), transparent 70%)`;
 
-const fadeOut = 'opacity 0.25s';
-const fadeIn = `opacity 0.45s ${vars.ease}`;
+const fadeOut = `opacity ${vars.duration.fast} ${vars.ease}`;
+const fadeIn = `opacity ${vars.duration.base} ${vars.ease}`;
 const hoverMotion = `${finePointer} and ${motionOk}`;
 
 export const button = style({
   position: 'relative',
   isolation: 'isolate',
-  transition: `scale 0.2s ${vars.ease}, translate 0.25s ${vars.ease}`,
+  transition: `scale ${vars.duration.fast} ${vars.ease}, translate ${vars.duration.fast} ${vars.ease}`,
   selectors: {
     '&::before': {
       content: "''",
@@ -65,7 +65,7 @@ export const buttonPrimary = style({
 const sweep = {
   opacity: 1,
   transform: 'translateX(320%) skewX(-20deg)',
-  transition: `transform 0.9s ${vars.ease}, opacity 0s`,
+  transition: `transform ${vars.duration.slow} ${vars.ease}, opacity 0s`,
 };
 
 export const buttonDeco = style({
@@ -86,7 +86,7 @@ export const buttonDeco = style({
       background: sheen(0.16),
       opacity: 0,
       transform: 'translateX(-120%) skewX(-20deg)',
-      transition: 'opacity 0.2s, transform 0s 0.2s',
+      transition: `opacity ${vars.duration.fast} ${vars.ease}, transform 0s ${vars.duration.fast}`,
     },
     '&::after': {
       content: "''",
@@ -114,7 +114,7 @@ export const buttonDeco = style({
 
 export const buttonIcon = style({
   display: 'inline-block',
-  transition: `transform 0.5s ${vars.ease}`,
+  transition: `transform ${vars.duration.base} ${vars.ease}`,
   selectors: { '&::before': { content: 'attr(data-text)' } },
   '@media': {
     [motionOk]: {
