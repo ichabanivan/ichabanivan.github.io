@@ -1,1 +1,1 @@
-export { Section, type SectionProps } from './Section';
+export { HEADING_CLEARANCE, Section, type SectionProps } from './Section';
