@@ -18,12 +18,12 @@ export function yearsSince(startIso: string, now: Date = new Date()): number {
 }
 
 export function refreshTenures(): void {
-  document.querySelectorAll<HTMLElement>('[data-tenure-start]').forEach((el) => {
-    const start = el.dataset.tenureStart;
-    if (start) el.textContent = tenure(start, el.dataset.tenureEnd || undefined);
+  document.querySelectorAll<HTMLElement>('[data-tenure-start]').forEach((element) => {
+    const start = element.dataset.tenureStart;
+    if (start) element.textContent = tenure(start, element.dataset.tenureEnd || undefined);
   });
-  document.querySelectorAll<HTMLElement>('[data-years-since]').forEach((el) => {
-    const start = el.dataset.yearsSince;
-    if (start) el.textContent = String(yearsSince(start));
+  document.querySelectorAll<HTMLElement>('[data-years-since]').forEach((element) => {
+    const start = element.dataset.yearsSince;
+    if (start) element.textContent = String(yearsSince(start));
   });
 }

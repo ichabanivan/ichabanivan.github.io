@@ -391,7 +391,7 @@ export const experience: Employer[] = [
 
 export const currentEmployer = experience[0];
 export const currentPosition = currentEmployer.positions[0];
-const earliest = <T>(newestFirst: readonly T[]) => newestFirst[newestFirst.length - 1];
+const earliest = <Item>(newestFirst: readonly Item[]) => newestFirst[newestFirst.length - 1];
 export const careerStart = earliest(earliest(experience).positions).start;
 
 export function employerPeriod({ positions }: Employer) {

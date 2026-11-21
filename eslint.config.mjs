@@ -1,21 +1,25 @@
-import js from '@eslint/js';
+import javascript from '@eslint/js';
 import astro from 'eslint-plugin-astro';
-import jsxA11y from 'eslint-plugin-jsx-a11y-x';
+import jsxAccessibility from 'eslint-plugin-jsx-a11y-x';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import typescriptEslint from 'typescript-eslint';
 
 const typedFiles = ['**/*.ts', '**/*.tsx'];
 const astroClientScripts = ['**/*.astro/*.ts', '**/*.astro/*.js'];
-const typed = (configs) =>
-  configs.map((config) => ({ ...config, files: typedFiles, ignores: astroClientScripts }));
+const typed = (configurations) =>
+  configurations.map((configuration) => ({
+    ...configuration,
+    files: typedFiles,
+    ignores: astroClientScripts,
+  }));
 
-export default tseslint.config(
+export default typescriptEslint.config(
   { ignores: ['dist', '.astro', 'storybook-static', 'node_modules'] },
   { linterOptions: { reportUnusedDisableDirectives: 'error' } },
 
-  js.configs.recommended,
-  ...typed(tseslint.configs.strictTypeChecked),
-  ...typed(tseslint.configs.stylisticTypeChecked),
+  javascript.configs.recommended,
+  ...typed(typescriptEslint.configs.strictTypeChecked),
+  ...typed(typescriptEslint.configs.stylisticTypeChecked),
   {
     files: typedFiles,
     ignores: astroClientScripts,
@@ -36,7 +40,7 @@ export default tseslint.config(
     },
   },
 
-  { files: ['**/*.tsx'], ...jsxA11y.configs.strict },
+  { files: ['**/*.tsx'], ...jsxAccessibility.configs.strict },
 
   ...astro.configs['flat/recommended'],
   ...astro.configs['flat/jsx-a11y-strict'],
