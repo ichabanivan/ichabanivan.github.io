@@ -1,41 +1,64 @@
-import { Box, Button, Container, Text } from '../../ui';
+import { Box, Button, Text } from '../../ui';
 import { vars } from '../../styles/theme.css';
+import { NameLine } from '../Hero';
+import { Marquee } from '../Marquee';
+
+const MARQUEE_WORDS = ['404', 'Not found', 'Wrong turn', 'No such page', 'Dead end', '404'];
 
 interface NotFoundProps {
   homeHref: string;
 }
 
 export function NotFound({ homeHref }: NotFoundProps) {
+  const gutter = vars.space.gutter;
+
   return (
     <Box
       as="main"
       id="main"
       display="flex"
-      alignItems="center"
+      flexDirection="column"
+      justifyContent="space-between"
       minHeight="100svh"
-      paddingBlock={vars.space.section}
+      paddingTop={vars.space.headerH}
+      overflow="hidden"
     >
-      <Container>
+      <Box as="section" id="top" padding={`clamp(48px, 9vw, 120px) ${gutter} 8`}>
         <Text variant="eyebrow">Error 404</Text>
-        <Text
+        <Box
           as="h1"
-          variant="display"
           marginTop="4"
-          fontSize="clamp(46px, 7.4vw, 104px)"
+          fontFamily={vars.font.display}
+          fontSize={{ default: 'clamp(56px, 17vw, 190px)', lg: 'clamp(96px, 13vw, 236px)' }}
           fontWeight={700}
-          lineHeight={0.95}
+          lineHeight={0.8}
+          letterSpacing="0.04em"
+          textTransform="uppercase"
+          color={vars.color.accent}
         >
-          Page not found
+          <NameLine line={0}>Page</NameLine>{' '}
+          <NameLine line={1} paddingLeft={{ default: '0.5em', lg: '0.85em' }}>
+            Not found
+          </NameLine>
+        </Box>
+        <Text
+          marginTop="clamp(20px, 3vw, 40px)"
+          fontSize="clamp(18px, 2.2vw, 30px)"
+          fontWeight={300}
+          letterSpacing={{ default: '0.16em', lg: '0.22em' }}
+          textTransform="uppercase"
+          color={vars.color.textStrong}
+        >
+          This address does not exist
         </Text>
-        <Text variant="lead" maxWidth="34ch" marginTop="6" color={vars.color.muted}>
-          This address does not exist. The CV, experience and contact details are on the home page.
-        </Text>
-        <Box marginTop="clamp(28px, 4vw, 48px)">
+        <Box display="flex" flexWrap="wrap" gap="3" marginTop="clamp(28px, 4vw, 48px)">
           <Button variant="primary" href={homeHref}>
             Go to the home page
-          </Button>
+          </Button>{' '}
+          <Button href={`${homeHref}#contact`}>Get in touch</Button>
         </Box>
-      </Container>
+      </Box>
+      <Marquee words={MARQUEE_WORDS} />
     </Box>
   );
 }

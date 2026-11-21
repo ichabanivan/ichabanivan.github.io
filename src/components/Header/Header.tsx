@@ -12,9 +12,10 @@ const NAV_ID = 'site-nav';
 
 interface HeaderProps {
   cvHref: string;
+  homeHref?: string;
 }
 
-export function Header({ cvHref }: HeaderProps) {
+export function Header({ cvHref, homeHref = '' }: HeaderProps) {
   return (
     <Box
       as="header"
@@ -37,7 +38,7 @@ export function Header({ cvHref }: HeaderProps) {
         <Box
           as="a"
           group
-          href="#top"
+          href={homeHref || '#top'}
           className={hitArea}
           aria-label={`${profile.name}, home`}
           display="inline-flex"
@@ -81,7 +82,7 @@ export function Header({ cvHref }: HeaderProps) {
           >
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <NavLink href={link.href} label={link.label} />
+                <NavLink href={`${homeHref}${link.href}`} label={link.label} />
               </li>
             ))}
           </Box>

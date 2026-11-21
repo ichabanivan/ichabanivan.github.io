@@ -1,12 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Header } from '../components/Header';
 import { NotFound } from '../components/NotFound';
+import { Footer } from '../components/Footer';
+import { ConsentBanner } from '../components/ConsentBanner';
 import { profile } from '../data/cv';
 
+const homeHref = import.meta.env.BASE_URL;
 const title = `Page not found | ${profile.name}`;
 const description = `This page does not exist on the site of ${profile.name}.`;
 ---
 
 <Base title={title} description={description} indexable={false}>
-  <NotFound homeHref={import.meta.env.BASE_URL} />
+  <Header cvHref={profile.cvPdf} homeHref={homeHref} />
+  <NotFound homeHref={homeHref} />
+  <Footer year={new Date().getFullYear()} />
+  <ConsentBanner />
 </Base>
