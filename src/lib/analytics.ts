@@ -10,6 +10,7 @@ interface EventParamsByName {
   menu_open: Record<string, never>;
   web_vital: { metric_name: string; metric_value: number; metric_rating: string };
   js_error: { error_message: string; error_source: string };
+  page_not_found: { requested_path: string; referrer: string };
 }
 
 export type EventName = keyof EventParamsByName;
@@ -36,6 +37,7 @@ const EVENT_NAMES: Record<EventName, true> = {
   menu_open: true,
   web_vital: true,
   js_error: true,
+  page_not_found: true,
 };
 
 const DEBUG_KEY = 'ga_debug';

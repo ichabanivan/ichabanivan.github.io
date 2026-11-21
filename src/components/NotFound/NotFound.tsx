@@ -16,6 +16,7 @@ export function NotFound({ homeHref }: NotFoundProps) {
     <Box
       as="main"
       id="main"
+      data-not-found
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
@@ -52,10 +53,23 @@ export function NotFound({ homeHref }: NotFoundProps) {
           This address does not exist
         </Text>
         <Box display="flex" flexWrap="wrap" gap="3" marginTop="clamp(28px, 4vw, 48px)">
-          <Button variant="primary" href={homeHref}>
+          <Button
+            variant="primary"
+            href={homeHref}
+            data-track="nav_click"
+            data-track-target="home"
+            data-track-placement="not_found"
+          >
             Go to the home page
           </Button>{' '}
-          <Button href={`${homeHref}#contact`}>Get in touch</Button>
+          <Button
+            href={`${homeHref}#contact`}
+            data-track="nav_click"
+            data-track-target="contact"
+            data-track-placement="not_found"
+          >
+            Get in touch
+          </Button>
         </Box>
       </Box>
       <Marquee words={MARQUEE_WORDS} />
