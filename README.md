@@ -20,6 +20,7 @@ npm run storybook        # component workshop on http://localhost:6006
 npm run build-storybook  # static Storybook into storybook-static/, also built in CI as a check
 npm run format   # format with Prettier (npm run format:check to only report)
 npm run icons    # regenerate the favicon and app icons in public/
+npm run links    # request every external link in the built page (run npm run build first)
 ```
 
 ## Where things live
@@ -64,3 +65,9 @@ The Download CV buttons download the PDF export of the CV Google Doc (`profile.c
 `.github/workflows/deploy.yml` runs the format check, ESLint, the type-check, the Storybook build, the site build and the Playwright smoke tests on every pull request.
 A push to `master` runs the same steps and then publishes to GitHub Pages
 (**Settings → Pages → Source** must be **GitHub Actions**).
+
+`.github/workflows/links.yml` builds the site and runs `npm run links` on the first day of every month; a broken CV or certificate link fails the run.
+`.github/dependabot.yml` opens one grouped pull request a week for npm packages and one for GitHub Actions.
+
+`src/pages/404.astro` becomes `404.html`, which GitHub Pages serves for unknown addresses.
+The `dateModified` value in the structured data is the date of the last commit that changed `src/data/cv.ts`, so the build needs the full git history (`fetch-depth: 0`).
