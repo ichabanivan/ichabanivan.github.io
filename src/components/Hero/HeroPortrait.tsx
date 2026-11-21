@@ -1,15 +1,28 @@
-import type { CSSProperties } from 'react';
+import { Fragment, type CSSProperties } from 'react';
 import { profile } from '../../data/cv';
 import { Box } from '../../ui';
 import { vars } from '../../styles/theme.css';
 import { Strip } from './Strip';
-import { ACCENT_STRIP, HERO_SIZES, STRIPS, STRIP_SKEW, stripStyle } from './strips';
+import {
+  ACCENT_STRIP,
+  DENSE_SCREEN,
+  HERO_SIZES,
+  HERO_SIZES_DENSE,
+  STRIPS,
+  STRIP_SKEW,
+  stripStyle,
+} from './strips';
+
+export interface HeroPhotoSource {
+  type: string;
+  srcSet: string;
+}
 
 export interface HeroPhoto {
   src: string;
-  srcSet: string;
   width: number;
   height: number;
+  sources: HeroPhotoSource[];
 }
 
 interface HeroPortraitProps {
@@ -35,22 +48,33 @@ export function HeroPortrait({ photo }: HeroPortraitProps) {
           aria-hidden={i === 0 ? undefined : true}
           key={strip.left}
         >
-          <Box
-            as="img"
-            src={photo.src}
-            srcSet={photo.srcSet}
-            sizes={HERO_SIZES}
-            htmlWidth={photo.width}
-            htmlHeight={photo.height}
-            alt={i === 0 ? `Portrait of ${profile.name}` : ''}
-            loading="eager"
-            decoding="async"
-            fetchPriority={i === 0 ? 'high' : undefined}
-            width="100%"
-            height="100%"
-            objectFit="cover"
-            objectPosition="50% 28%"
-          />
+          <Box as="picture" display="contents">
+            {photo.sources.map((source) => (
+              <Fragment key={source.type}>
+                <source
+                  type={source.type}
+                  media={DENSE_SCREEN}
+                  srcSet={source.srcSet}
+                  sizes={HERO_SIZES_DENSE}
+                />
+                <source type={source.type} srcSet={source.srcSet} sizes={HERO_SIZES} />
+              </Fragment>
+            ))}
+            <Box
+              as="img"
+              src={photo.src}
+              htmlWidth={photo.width}
+              htmlHeight={photo.height}
+              alt={i === 0 ? `Portrait of ${profile.name}` : ''}
+              loading="eager"
+              decoding="async"
+              fetchPriority={i === 0 ? 'high' : undefined}
+              width="100%"
+              height="100%"
+              objectFit="cover"
+              objectPosition="50% 28%"
+            />
+          </Box>
         </Strip>
       ))}
       <Strip

@@ -1,6 +1,7 @@
 import { keyframes, style, styleVariants } from '@vanilla-extract/css';
 import { vars } from '../../styles/theme.css';
 import { finePointer, motionOk } from '../../styles/media';
+import { PORTRAIT_PENDING_CLASS } from '../../lib/hero-strips';
 
 const clip = (top: string, bottom: string) => `polygon(
   calc((var(--l) + var(--k) * (50 - var(${top})) / 100) * 1%) calc(var(${top}) * 1%),
@@ -29,6 +30,9 @@ const wipe = (name: string) =>
       [motionOk]: {
         animation: `${name} 1.5s ${vars.easeExpo} backwards`,
         animationDelay: 'calc(0.1s + var(--i) * 0.09s)',
+        selectors: {
+          [`.${PORTRAIT_PENDING_CLASS} &`]: { animationPlayState: 'paused' },
+        },
       },
     },
   });
