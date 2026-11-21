@@ -16,7 +16,7 @@ export function headings(targets: HTMLElement[], scale: Scale): RevealUnit {
   };
 
   targets.forEach((heading) => {
-    const split = SplitText.create(heading, {
+    const split = new SplitText(heading, {
       type: 'words,chars',
       mask: 'words',
       autoSplit: true,

@@ -25,5 +25,5 @@ export function startPage() {
   initLightbox();
   initAnalytics();
   initConsent();
-  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  void document.fonts?.ready.then(() => ScrollTrigger.refresh());
 }

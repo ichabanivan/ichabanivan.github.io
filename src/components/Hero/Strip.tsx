@@ -1,7 +1,7 @@
 import { Box, type BoxProps } from '../../ui';
 import * as styles from './Hero.css';
 
-type StripProps = BoxProps<'div'> & {
+type StripProps = BoxProps & {
   index: number;
 };
 

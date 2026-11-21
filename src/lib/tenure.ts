@@ -19,9 +19,11 @@ export function yearsSince(startIso: string, now: Date = new Date()): number {
 
 export function refreshTenures(): void {
   document.querySelectorAll<HTMLElement>('[data-tenure-start]').forEach((el) => {
-    el.textContent = tenure(el.dataset.tenureStart!, el.dataset.tenureEnd || undefined);
+    const start = el.dataset.tenureStart;
+    if (start) el.textContent = tenure(start, el.dataset.tenureEnd || undefined);
   });
   document.querySelectorAll<HTMLElement>('[data-years-since]').forEach((el) => {
-    el.textContent = String(yearsSince(el.dataset.yearsSince!));
+    const start = el.dataset.yearsSince;
+    if (start) el.textContent = String(yearsSince(start));
   });
 }

@@ -13,7 +13,8 @@ npm install
 npm run dev      # local dev server
 npm run build    # static build into dist/
 npm run preview  # serve the built site
-npm run check    # type-check (astro check), also runs in CI before the build
+npm run check    # type-check (astro check)
+npm run lint     # ESLint (npm run lint:fix to apply autofixes)
 npm run storybook        # component workshop on http://localhost:6006
 npm run build-storybook  # static Storybook into storybook-static/, also built in CI as a check
 npm run format   # format with Prettier (npm run format:check to only report)
@@ -58,5 +59,6 @@ The Download CV buttons download the PDF export of the CV Google Doc (`profile.c
 
 ## Deploy
 
-Every push to `master` builds and publishes to GitHub Pages via `.github/workflows/deploy.yml`
+`.github/workflows/deploy.yml` runs the format check, ESLint, the type-check, the Storybook build and the site build on every pull request.
+A push to `master` runs the same steps and then publishes to GitHub Pages
 (**Settings → Pages → Source** must be **GitHub Actions**).

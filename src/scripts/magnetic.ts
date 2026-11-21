@@ -17,8 +17,9 @@ function attach(shell: HTMLElement): () => void {
   const shellY = gsap.quickTo(shell, 'y', tween);
   const labelX = gsap.quickTo(label, 'x', tween);
   const labelY = gsap.quickTo(label, 'y', tween);
-  const scale = (value: number) =>
+  const scale = (value: number) => {
     gsap.to(shell, { scale: value, duration: PRESS_DURATION, ease: ease.soft, overwrite: 'auto' });
+  };
 
   let box = { left: 0, top: 0, width: 1, height: 1 };
   const measure = () => {
