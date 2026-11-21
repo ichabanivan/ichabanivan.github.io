@@ -131,7 +131,7 @@ function wrap(condition: Condition, rule: StyleRule): StyleRule {
     return {
       selectors: { [selector.focused]: rule },
       '@media': { [hoverCapable]: { selectors: { [selector.hovered]: rule } } },
-    } as StyleRule;
+    };
   }
   return { '@media': { [media[condition as keyof typeof media]]: rule } };
 }
@@ -144,7 +144,7 @@ for (const condition of CONDITIONS) {
   for (const prop of props) {
     const value = createVar(`${prop}-${condition}`);
     atoms[condition][prop] = {
-      className: style(wrap(condition, { [prop]: value } as StyleRule), `${prop}_${condition}`),
+      className: style(wrap(condition, { [prop]: value }), `${prop}_${condition}`),
       variable: value.slice('var('.length, -1),
     };
   }
