@@ -15,6 +15,7 @@
     "check": "astro check",
     "lint": "astro sync && eslint .",
     "lint:fix": "astro sync && eslint . --fix",
+    "test:e2e": "playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "format": "prettier --write .",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
     "@storybook/addon-a11y": "^10.6.7",
     "@storybook/addon-docs": "^10.6.7",
     "@storybook/react-vite": "^10.6.7",

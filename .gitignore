@@ -43,3 +43,7 @@ dist
 
 # Storybook build
 storybook-static
+
+# Playwright
+test-results
+playwright-report

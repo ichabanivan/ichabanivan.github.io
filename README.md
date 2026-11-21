@@ -15,6 +15,7 @@ npm run build    # static build into dist/
 npm run preview  # serve the built site
 npm run check    # type-check (astro check)
 npm run lint     # ESLint (npm run lint:fix to apply autofixes)
+npm run test:e2e # Playwright smoke tests against a fresh production build
 npm run storybook        # component workshop on http://localhost:6006
 npm run build-storybook  # static Storybook into storybook-static/, also built in CI as a check
 npm run format   # format with Prettier (npm run format:check to only report)
@@ -28,6 +29,7 @@ npm run icons    # regenerate the favicon and app icons in public/
 - `src/styles/`: theme tokens, global styles, media queries, accessibility helpers, shared layout values.
 - `src/scripts/`: all browser behaviour (header, scroll effects, reveals, hero strips, lightbox, magnetic buttons), started from `main.ts` after first paint. Each `init*` function returns its cleanup. React only renders HTML at build time; no React code ships to the browser.
 - `src/lib/`: helpers shared by the build and the scripts (motion tokens, GSAP setup, hero strip geometry, document images).
+- `tests/`: Playwright smoke tests for the built site (reveals, reduced motion, no JavaScript, script failure, lightbox, navigation), on a desktop and a mobile viewport.
 - `src/stories/`: fixtures and decorators shared by stories.
 - `.storybook/`: Storybook configuration (theme and viewport toolbars, accessibility addon, autodocs).
 
@@ -59,6 +61,6 @@ The Download CV buttons download the PDF export of the CV Google Doc (`profile.c
 
 ## Deploy
 
-`.github/workflows/deploy.yml` runs the format check, ESLint, the type-check, the Storybook build and the site build on every pull request.
+`.github/workflows/deploy.yml` runs the format check, ESLint, the type-check, the Storybook build, the site build and the Playwright smoke tests on every pull request.
 A push to `master` runs the same steps and then publishes to GitHub Pages
 (**Settings → Pages → Source** must be **GitHub Actions**).
