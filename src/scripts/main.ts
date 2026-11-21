@@ -7,6 +7,7 @@ import { initMagnetic } from './magnetic';
 import { initLightbox } from './lightbox';
 import { initAnalytics } from './analytics';
 import { initConsent } from './consent';
+import { keepFragmentTargetInView } from './fragment-target';
 
 declare global {
   interface Window {
@@ -20,10 +21,14 @@ export function startPage() {
   const animate = document.documentElement.classList.contains('js');
   window.__motionReady = true;
   initScroll({ animate });
+  const realignFragmentTarget = keepFragmentTargetInView();
   initHeroStrips();
   initMagnetic();
   initLightbox();
   initAnalytics();
   initConsent();
-  void document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  void document.fonts?.ready.then(() => {
+    ScrollTrigger.refresh();
+    realignFragmentTarget();
+  });
 }

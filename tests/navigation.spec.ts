@@ -28,3 +28,21 @@ test('navigates to a section from the header', async ({ page, isMobile }) => {
   await expect(page.locator('#skills-title')).toBeInViewport();
   if (isMobile) await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 });
+
+test('opens at the section named in the address', async ({ page }) => {
+  await page.goto('/#contact');
+  await expect(page.locator('#contact-title')).toBeInViewport();
+});
+
+test('reaches a home page section from the not found page', async ({ page, isMobile }) => {
+  await page.goto('/this-page-does-not-exist/');
+  await page.getByRole('link', { name: 'Get in touch' }).click();
+  await expect(page).toHaveURL('/#contact');
+  await expect(page.locator('#contact-title')).toBeInViewport();
+
+  await page.goto('/this-page-does-not-exist/');
+  if (isMobile) await page.locator('[data-nav-toggle]').click();
+  await page.locator('header nav a[href$="#skills"]').click();
+  await expect(page).toHaveURL('/#skills');
+  await expect(page.locator('#skills-title')).toBeInViewport();
+});
