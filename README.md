@@ -2,6 +2,8 @@
 
 **Live:** https://ichabanivan.github.io/
 
+**Storybook:** https://ichabanivan.github.io/storybook/
+
 Single-page CV built with Astro, React, vanilla-extract and GSAP.
 
 ## Commands
@@ -17,9 +19,10 @@ npm run check    # type-check (astro check)
 npm run lint     # ESLint (npm run lint:fix to apply autofixes)
 npm run test:e2e # Playwright smoke tests against a fresh production build
 npm run storybook        # component workshop on http://localhost:6006
-npm run build-storybook  # static Storybook into storybook-static/, also built in CI as a check
+npm run build-storybook  # static Storybook into storybook-static/
 npm run format   # format with Prettier (npm run format:check to only report)
 npm run icons    # regenerate the favicon and app icons in public/
+npm run links    # request every external link in the built page (run npm run build first)
 ```
 
 ## Where things live
@@ -61,6 +64,13 @@ The Download CV buttons download the PDF export of the CV Google Doc (`profile.c
 
 ## Deploy
 
-`.github/workflows/deploy.yml` runs the format check, ESLint, the type-check, the Storybook build, the site build and the Playwright smoke tests on every pull request.
-A push to `master` runs the same steps and then publishes to GitHub Pages
+`.github/workflows/deploy.yml` runs the format check, ESLint, the type-check, the site build, the Storybook build and the Playwright smoke tests on every pull request.
+A push to `master` runs the same steps and then publishes the site to GitHub Pages, with Storybook under `/storybook/` (kept out of search engines by `robots.txt`)
 (**Settings → Pages → Source** must be **GitHub Actions**).
+
+`.github/workflows/links.yml` builds the site and runs `npm run links` on the first day of every month; a broken CV or certificate link fails the run.
+`.github/dependabot.yml` opens one grouped pull request a week for npm packages and one for GitHub Actions.
+
+`src/pages/404.astro` becomes `404.html`, which GitHub Pages serves for unknown addresses.
+`src/pages/llms.txt.ts` generates `llms.txt`, a Markdown summary of the CV for language models, from `src/data/cv.ts`.
+The `dateModified` value in the structured data is the date of the last commit that changed `src/data/cv.ts`, so the build needs the full git history (`fetch-depth: 0`).

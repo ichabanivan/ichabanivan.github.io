@@ -4,15 +4,17 @@ import '../styles/global.css';
 import { NEW_TAB_HINT_ID } from '../styles/hints';
 import { profile } from '../data/cv';
 import { buildJsonLd } from '../lib/jsonld';
+import { contentModifiedDate } from '../lib/content-date';
 import { PORTRAIT_PENDING_CLASS } from '../lib/hero-strips';
 import bebasUrl from '../assets/fonts/bebas-neue-bold.woff2?url';
 
 interface Props {
   title: string;
   description: string;
+  indexable?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, indexable = true } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(`${base}og.jpg?v=2`, Astro.site).href;
@@ -25,7 +27,7 @@ const jsonLd = buildJsonLd({
   canonical,
   image: ogImage,
   description,
-  dateModified: new Date().toISOString(),
+  dateModified: contentModifiedDate(),
 });
 ---
 
@@ -135,7 +137,11 @@ const jsonLd = buildJsonLd({
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
-    <link rel="canonical" href={canonical} />
+    {indexable ? (
+      <link rel="canonical" href={canonical} />
+    ) : (
+      <meta name="robots" content="noindex" />
+    )}
     <meta name="google-site-verification" content="UvdhO1XK39hxhnoYdXQ6r5I-rbfN0PWdhoMc5r-yorY" />
     <meta name="theme-color" content={BG} />
     <meta name="color-scheme" content="dark" />
@@ -171,7 +177,7 @@ const jsonLd = buildJsonLd({
       }
     </style>
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {indexable && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <script is:inline define:vars={{ PORTRAIT_PENDING_CLASS }}>
       (function () {
         var root = document.documentElement;

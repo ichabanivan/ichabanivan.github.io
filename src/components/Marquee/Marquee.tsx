@@ -2,9 +2,13 @@ import { marquee } from '../../data/cv';
 import { Box } from '../../ui';
 import { MarqueeTrack } from './MarqueeTrack';
 
-const ROW = [...marquee, ...marquee];
+interface MarqueeProps {
+  words?: readonly string[];
+}
 
-export function Marquee() {
+export function Marquee({ words = marquee }: MarqueeProps) {
+  const row = [...words, ...words];
+
   return (
     <Box
       aria-hidden
@@ -15,8 +19,8 @@ export function Marquee() {
       overflow="hidden"
       userSelect="none"
     >
-      <MarqueeTrack words={ROW} direction={-1} />
-      <MarqueeTrack words={[...ROW].reverse()} direction={1} />
+      <MarqueeTrack words={row} direction={-1} />
+      <MarqueeTrack words={[...row].reverse()} direction={1} />
     </Box>
   );
 }

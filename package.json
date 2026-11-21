@@ -20,7 +20,8 @@
     "build-storybook": "storybook build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "icons": "node scripts/generate-icons.mjs"
+    "icons": "node scripts/generate-icons.mjs",
+    "links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.8",

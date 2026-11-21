@@ -10,6 +10,7 @@ const TRACK_PARAM = /^track(?=[A-Z])/;
 const MAX_REPORTED_ERRORS = 3;
 const MESSAGE_LIMIT = 100;
 const CLS_SCALE = 1000;
+const PATH_LIMIT = 100;
 
 const toSnakeCase = (camel: string) =>
   camel.replace(/[A-Z]/g, (letter, index) => `${index ? '_' : ''}${letter.toLowerCase()}`);
@@ -90,11 +91,20 @@ function trackWebVitals() {
   onLCP(report);
 }
 
+function trackNotFound() {
+  if (!document.querySelector('[data-not-found]')) return;
+  trackEvent('page_not_found', {
+    requested_path: location.pathname.slice(0, PATH_LIMIT),
+    referrer: document.referrer.slice(0, PATH_LIMIT) || 'direct',
+  });
+}
+
 export function initAnalytics() {
   if (!analyticsAvailable() && !analyticsDebug) return;
   trackClicks();
   trackSectionViews();
   trackErrors();
   trackWebVitals();
+  trackNotFound();
   window.addEventListener('beforeprint', () => trackEvent('cv_print', {}));
 }
