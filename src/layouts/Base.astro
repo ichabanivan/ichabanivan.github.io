@@ -209,7 +209,6 @@ const jsonLd = buildJsonLd({
         };
         if (!portrait || portrait.complete) return reveal();
         portrait.addEventListener('load', reveal);
-        portrait.addEventListener('error', reveal);
       })();
     </script>
     {analyticsEnabled && <script is:inline>
