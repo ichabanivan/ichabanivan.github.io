@@ -9,6 +9,8 @@ const WINDOWS: { top: (h: number) => number; bottom: (h: number) => number }[] =
 
 export const REST = { fine: 50, coarse: 30 };
 
+export const PORTRAIT_PENDING_CLASS = 'portrait-pending';
+
 const round = (n: number) => Math.round(n * 100) / 100;
 
 export const stripWindow = (i: number, h: number) => ({

@@ -4,6 +4,7 @@ import '../styles/global.css';
 import { NEW_TAB_HINT_ID } from '../styles/hints';
 import { profile } from '../data/cv';
 import { buildJsonLd } from '../lib/jsonld';
+import { PORTRAIT_PENDING_CLASS } from '../lib/hero-strips';
 import bebasUrl from '../assets/fonts/bebas-neue-bold.woff2?url';
 
 interface Props {
@@ -171,10 +172,10 @@ const jsonLd = buildJsonLd({
     </style>
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    <script is:inline>
+    <script is:inline define:vars={{ PORTRAIT_PENDING_CLASS }}>
       (function () {
         var root = document.documentElement;
-        root.classList.add('js');
+        root.classList.add('js', PORTRAIT_PENDING_CLASS);
         function bail(reason) {
           if (window.__motionReady || !root.classList.contains('js')) return;
           root.classList.remove('js');
@@ -200,6 +201,17 @@ const jsonLd = buildJsonLd({
       Opens in a new tab
     </span>
     <slot />
+    <script is:inline define:vars={{ PORTRAIT_PENDING_CLASS }}>
+      (function () {
+        var portrait = document.querySelector('[data-hero] img');
+        var reveal = function () {
+          document.documentElement.classList.remove(PORTRAIT_PENDING_CLASS);
+        };
+        if (!portrait || portrait.complete) return reveal();
+        portrait.addEventListener('load', reveal);
+        portrait.addEventListener('error', reveal);
+      })();
+    </script>
     {analyticsEnabled && <script is:inline>
       (function () {
         var banner = document.querySelector('[data-consent-banner]');

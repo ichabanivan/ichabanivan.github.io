@@ -1,5 +1,4 @@
 ---
-import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { Header } from '../components/Header';
 import { Hero } from '../components/Hero';
@@ -14,26 +13,14 @@ import { Footer } from '../components/Footer';
 import { Lightbox } from '../components/Lightbox';
 import { ConsentBanner } from '../components/ConsentBanner';
 import { getDocumentImages, logos } from '../lib/documents';
-import portrait from '../assets/portrait.jpg';
+import { getPortrait } from '../lib/portrait';
 import { profile, currentEmployer, currentPosition } from '../data/cv';
 import { skipLink } from '../styles/a11y.css';
 import { Button } from '../ui';
 
 const cvHref = profile.cvPdf;
 
-const image = await getImage({
-  src: portrait,
-  widths: [480, 640, 800, 960, 1200],
-  format: 'webp',
-  quality: 78,
-});
-
-const photo = {
-  src: image.src,
-  srcSet: image.srcSet.attribute,
-  width: portrait.width,
-  height: portrait.height,
-};
+const photo = await getPortrait();
 
 const documents = await getDocumentImages();
 

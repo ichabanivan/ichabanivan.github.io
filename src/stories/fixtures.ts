@@ -24,7 +24,7 @@ const documentImage = (url: string, width: number, height: number): DocumentImag
   height,
 });
 
-export const photo: HeroPhoto = { src: portraitUrl, srcSet: '', width: 1201, height: 1800 };
+export const photo: HeroPhoto = { src: portraitUrl, width: 1201, height: 1800, sources: [] };
 
 export const documents: DocumentImages = {
   efset2026: documentImage(efset2026Url, 1537, 2182),
